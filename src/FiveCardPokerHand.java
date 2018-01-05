@@ -31,7 +31,7 @@ public class FiveCardPokerHand {
         return this.handClassification;
     }
 
-    private Classification classifyHand(final SortedSet<Card> cards) {
+    private static Classification classifyHand(final SortedSet<Card> cards) {
 
         final HandGroupResult groupResult = new HandGroupResult(cards);
 
@@ -62,7 +62,7 @@ public class FiveCardPokerHand {
         return groupResult.getPairCount() == 1;
     }
 
-    private static boolean isTwoPair(final HandGroupResult groupResult) { ;
+    private static boolean isTwoPair(final HandGroupResult groupResult) {
         return groupResult.getPairCount() == 2;
     }
 
@@ -142,7 +142,7 @@ public class FiveCardPokerHand {
             this.pairCount = calculatePairCount(this.rankGroup);
         }
 
-        private int calculateSetCount(final Map<Card.Rank, Long> groupResult) {
+        private static int calculateSetCount(final Map<Card.Rank, Long> groupResult) {
             int numSets = 0;
             for(final Map.Entry<Card.Rank, Long> entry : groupResult.entrySet()) {
                 if(entry.getValue() == 3) {
@@ -152,7 +152,7 @@ public class FiveCardPokerHand {
             return numSets;
         }
 
-        private int calculatePairCount(final Map<Card.Rank, Long> groupResult) {
+        private static int calculatePairCount(final Map<Card.Rank, Long> groupResult) {
             int numPairs = 0;
             for(final Map.Entry<Card.Rank, Long> entry : groupResult.entrySet()) {
                 if(entry.getValue() == 2) {
