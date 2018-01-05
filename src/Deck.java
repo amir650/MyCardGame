@@ -44,12 +44,6 @@ public class Deck {
         return this.deckCards.size();
     }
 
-    public Optional<Card> fetchCard(final Card.Rank rank,
-                                    final Card.Suit suit) {
-        final Card card = new Card(rank, suit);
-        return this.deckCards.contains(card) ? Optional.of(card) : Optional.empty();
-    }
-
     public Optional<Card> deal() {
         return this.deckCards.empty() ? Optional.empty() :
                 Optional.of(this.deckCards.pop());

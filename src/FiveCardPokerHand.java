@@ -185,7 +185,7 @@ public class FiveCardPokerHand {
 
     static class Builder {
 
-        SortedSet<Card> cards;
+        private SortedSet<Card> cards;
 
         public Builder() {
             this.cards = new TreeSet<>(Comparator.naturalOrder());
