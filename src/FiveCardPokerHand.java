@@ -33,72 +33,48 @@ public class FiveCardPokerHand {
 
     private Classification classifyHand(final SortedSet<Card> cards) {
 
-        if(isRoyalFlush(cards)) {
+        final HandGroupResult groupResult = new HandGroupResult(cards);
+
+        if(isRoyalFlush(groupResult)) {
             return Classification.ROYAL_FLUSH;
-        } else if(isStraightFlush(cards)) {
+        } else if(isStraightFlush(groupResult)) {
             return Classification.STRAIGHT_FLUSH;
-        } else if(isFourOfAKind(cards)) {
+        } else if(isFourOfAKind(groupResult)) {
             return Classification.FOUR_OF_A_KIND;
-        } else if(isFullHouse(cards)) {
+        } else if(isFullHouse(groupResult)) {
             return Classification.FULL_HOUSE;
-        } else if(isFlush(cards)) {
+        } else if(isFlush(groupResult)) {
             return Classification.FLUSH;
-        } else if(isStraight(cards)) {
+        } else if(isStraight(groupResult)) {
             return Classification.STRAIGHT;
-        } else if(isSet(cards)) {
+        } else if(isSet(groupResult)) {
             return Classification.SET;
-        } else if(isTwoPair(cards)) {
+        } else if(isTwoPair(groupResult)) {
             return Classification.TWO_PAIR;
-        } else if(isPair(cards)) {
+        } else if(isPair(groupResult)) {
             return Classification.PAIR;
         }
 
         return Classification.HIGH_CARD;
     }
 
-    private static boolean isPair(final SortedSet<Card> cards) {
-        final Map<Card.Rank, Long> groupResult =
-                cards.stream()
-                     .collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
-        int numPairs = 0;
-        for(final Map.Entry<Card.Rank, Long> entry : groupResult.entrySet()) {
-            if(entry.getValue() == 2) {
-                numPairs++;
-            }
-        }
-        return numPairs == 1;
+    private static boolean isPair(final HandGroupResult groupResult) {
+        return groupResult.getPairCount() == 1;
     }
 
-    private static boolean isTwoPair(final SortedSet<Card> cards) {
-        final Map<Card.Rank, Long> groupResult =
-                cards.stream()
-                     .collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
-        int numPairs = 0;
-        for(final Map.Entry<Card.Rank, Long> entry : groupResult.entrySet()) {
-            if(entry.getValue() == 2) {
-                numPairs++;
-            }
-        }
-        return numPairs == 2;
+    private static boolean isTwoPair(final HandGroupResult groupResult) { ;
+        return groupResult.getPairCount() == 2;
     }
 
-    private static boolean isSet(final SortedSet<Card> cards) {
-        final Map<Card.Rank, Long> groupResult = cards.stream()
-                .collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
-        int numSets = 0;
-        for(final Map.Entry<Card.Rank, Long> entry : groupResult.entrySet()) {
-            if(entry.getValue() == 3) {
-                numSets++;
-            }
-        }
-        return numSets == 1;
+    private static boolean isSet(final HandGroupResult groupResult) {
+        return groupResult.getSetCount() == 1;
     }
 
-    private static boolean isStraight(final SortedSet<Card> cards) {
-        if(isWheel(cards)) {
+    private static boolean isStraight(final HandGroupResult groupResult) {
+        if(isWheel(groupResult)) {
             return true;
         }
-        final Card[] cardArray = cards.toArray(new Card[cards.size()]);
+        final Card[] cardArray = groupResult.getCards().toArray(new Card[groupResult.getCards().size()]);
         for(int i = 0; i < cardArray.length - 1; i++) {
             if(cardArray[i].getRank().getRankValue() != cardArray[i+1].getRank().getRankValue() - 1) {
                 return false;
@@ -107,8 +83,8 @@ public class FiveCardPokerHand {
         return true;
     }
 
-    private static boolean isWheel(final SortedSet<Card> cards) {
-        final Card[] cardArray = cards.toArray(new Card[cards.size()]);
+    private static boolean isWheel(final HandGroupResult groupResult) {
+        final Card[] cardArray = groupResult.getCards().toArray(new Card[groupResult.getCards().size()]);
         return  (cardArray[0].getRank().equals(Card.Rank.TWO)) &&
                 (cardArray[1].getRank().equals(Card.Rank.THREE)) &&
                 (cardArray[2].getRank().equals(Card.Rank.FOUR)) &&
@@ -116,43 +92,30 @@ public class FiveCardPokerHand {
                 (cardArray[4].getRank().equals(Card.Rank.ACE));
     }
 
-    private static boolean isFlush(final SortedSet<Card> cards) {
-        return cards.stream()
-                    .collect(Collectors.groupingBy(Card::getSuit, Collectors.counting())).containsValue(5L);
+    private static boolean isFlush(final HandGroupResult groupResult) {
+        return groupResult.getSuitGroup().containsValue(5L);
     }
 
-    private static boolean isFullHouse(final SortedSet<Card> cards) {
-        final Map<Card.Rank, Long> groupResult = cards.stream()
-                .collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
-        int numPairs = 0;
-        int numSets = 0;
-        for(final Map.Entry<Card.Rank, Long> entry : groupResult.entrySet()) {
-            if(entry.getValue() == 2L) {
-                numPairs++;
-            } else if(entry.getValue() == 3L) {
-                numSets++;
-            }
-        }
-        return numPairs == 1 && numSets == 1;
+    private static boolean isFullHouse(final HandGroupResult groupResult) {
+        return groupResult.getPairCount() == 1 && groupResult.getSetCount() == 1;
     }
 
-    private static boolean isFourOfAKind(final SortedSet<Card> cards) {
-        return cards.stream()
-                    .collect(Collectors.groupingBy(Card::getRank, Collectors.counting())).containsValue(4L);
+    private static boolean isFourOfAKind(final HandGroupResult groupResult) {
+        return groupResult.getRankGroup().containsValue(4L);
     }
 
-    private static boolean isStraightFlush(final SortedSet<Card> cards) {
-        return isFlush(cards) && isStraight(cards);
+    private static boolean isStraightFlush(final HandGroupResult groupResult) {
+        return isFlush(groupResult) && isStraight(groupResult);
     }
 
-    private static boolean isRoyalFlush(final SortedSet<Card> cards) {
-        final Card[] cardArray = cards.toArray(new Card[cards.size()]);
+    private static boolean isRoyalFlush(final HandGroupResult groupResult) {
+        final Card[] cardArray = groupResult.getCards().toArray(new Card[groupResult.getCards().size()]);
         if(cardArray[0].getRank().equals(Card.Rank.TEN) &&
            cardArray[1].getRank().equals(Card.Rank.JACK) &&
            cardArray[2].getRank().equals(Card.Rank.QUEEN) &&
            cardArray[3].getRank().equals(Card.Rank.KING) &&
            cardArray[4].getRank().equals(Card.Rank.ACE)) {
-            return isFlush(cards);
+            return isFlush(groupResult);
         }
         return false;
     }
@@ -160,6 +123,64 @@ public class FiveCardPokerHand {
     @Override
     public String toString() {
         return this.cards.toString();
+    }
+
+    static class HandGroupResult {
+        final SortedSet<Card> cards;
+        final Map<Card.Rank, Long> rankGroup;
+        final Map<Card.Suit, Long> suitGroup;
+        final int setCount;
+        final int pairCount;
+
+        HandGroupResult(final SortedSet<Card> cards) {
+            this.cards = cards;
+            this.rankGroup = cards.stream()
+                    .collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
+            this.suitGroup = cards.stream()
+                    .collect(Collectors.groupingBy(Card::getSuit, Collectors.counting()));
+            this.setCount = calculateSetCount(this.rankGroup);
+            this.pairCount = calculatePairCount(this.rankGroup);
+        }
+
+        private int calculateSetCount(final Map<Card.Rank, Long> groupResult) {
+            int numSets = 0;
+            for(final Map.Entry<Card.Rank, Long> entry : groupResult.entrySet()) {
+                if(entry.getValue() == 3) {
+                    numSets++;
+                }
+            }
+            return numSets;
+        }
+
+        private int calculatePairCount(final Map<Card.Rank, Long> groupResult) {
+            int numPairs = 0;
+            for(final Map.Entry<Card.Rank, Long> entry : groupResult.entrySet()) {
+                if(entry.getValue() == 2) {
+                    numPairs++;
+                }
+            }
+            return numPairs;
+        }
+
+        Map<Card.Rank, Long> getRankGroup() {
+            return this.rankGroup;
+        }
+
+        Map<Card.Suit, Long> getSuitGroup() {
+            return this.suitGroup;
+        }
+
+        SortedSet<Card> getCards() {
+            return this.cards;
+        }
+
+        int getSetCount() {
+            return this.setCount;
+        }
+
+        int getPairCount() {
+            return this.pairCount;
+        }
     }
 
     static class Builder {

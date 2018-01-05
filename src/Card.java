@@ -55,12 +55,7 @@ public class Card implements Comparable<Card> {
     @Override
     public int compareTo(final Card o) {
         final int rankComparison = Integer.compare(this.rank.getRankValue(), o.rank.getRankValue());
-
-        if (rankComparison != 0) {
-            return rankComparison;
-        }
-
-        return Integer.compare(this.suit.getSuitValue(), o.suit.getSuitValue());
+        return rankComparison != 0 ? rankComparison : Integer.compare(this.suit.getSuitValue(), o.suit.getSuitValue());
     }
 
     @Override

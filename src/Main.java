@@ -3,8 +3,8 @@ import java.util.stream.IntStream;
 
 public class Main {
 
-    //private static final int NUM_EXPERIMENTS = 30000000;
-    private static final int NUM_EXPERIMENTS = 2598960;
+    private static final int NUM_EXPERIMENTS = 10000000;
+    //private static final int NUM_EXPERIMENTS = 2598960;
     public static void main(String[] args) {
 
         final long startTime = System.currentTimeMillis();
