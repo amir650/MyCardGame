@@ -22,8 +22,8 @@ public class FiveCardPokerHand {
         HIGH_CARD
     }
 
-    FiveCardPokerHand(final SortedSet<Card> cards) {
-        this.cards = cards;
+    FiveCardPokerHand(final Builder builder) {
+        this.cards = Collections.unmodifiableSortedSet(builder.cards);
         this.handClassification = classifyHand(this.cards);
     }
 
@@ -197,14 +197,11 @@ public class FiveCardPokerHand {
         }
 
         public FiveCardPokerHand build() {
-            return new FiveCardPokerHand(initCards(this.cards));
-        }
-
-        private static SortedSet<Card> initCards(final SortedSet<Card> cards) {
             if(cards.size() != POKER_HAND_SIZE) {
                 throw new RuntimeException("Invalid hand size for hand " +cards.toString());
             }
-            return Collections.unmodifiableSortedSet(cards);
+            return new FiveCardPokerHand(this);
         }
+
     }
 }
