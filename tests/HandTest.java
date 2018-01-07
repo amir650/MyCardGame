@@ -83,7 +83,7 @@ public class HandTest {
 
         final FiveCardPokerHand hand = builder.build();
 
-        assertEquals(hand.getHandClassification(), FiveCardPokerHand.Classification.STRAIGHT);
+        assertEquals(hand.getHandClassification(), FiveCardPokerHand.Classification.WHEEL);
     }
 
     @Test
