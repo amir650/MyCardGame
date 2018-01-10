@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
 
     private final Classification handClassification;
-    private final HandGroupResult handGroupResult;
+    private final HandInformation handGroupResult;
 
     private static final int POKER_HAND_SIZE = 5;
 
@@ -15,8 +15,8 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
             int tieBreaker(final FiveCardPokerHand hand,
                            final FiveCardPokerHand otherHand) {
 
-                final Iterator<Map.Entry<Card.Rank, List<Card>>> handIterator = hand.getHandGroupResult().getRankGroup().entrySet().iterator();
-                final Iterator<Map.Entry<Card.Rank, List<Card>>> otherHandIterator = otherHand.getHandGroupResult().getRankGroup().entrySet().iterator();
+                final Iterator<Map.Entry<Card.Rank, List<Card>>> handIterator = hand.getHandInformation().getRankGroup().entrySet().iterator();
+                final Iterator<Map.Entry<Card.Rank, List<Card>>> otherHandIterator = otherHand.getHandInformation().getRankGroup().entrySet().iterator();
 
                 return Classification.compareHighCards(handIterator, otherHandIterator);
             }
@@ -25,27 +25,22 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
             @Override
             int tieBreaker(final FiveCardPokerHand hand,
                            final FiveCardPokerHand otherHand) {
-                final Iterator<Map.Entry<Card.Rank, List<Card>>> handIterator = hand.getHandGroupResult().getRankGroup().entrySet().iterator();
-                final Iterator<Map.Entry<Card.Rank, List<Card>>> otherHandIterator = otherHand.getHandGroupResult().getRankGroup().entrySet().iterator();
+                final Iterator<Map.Entry<Card.Rank, List<Card>>> handIterator = hand.getHandInformation().getRankGroup().entrySet().iterator();
+                final Iterator<Map.Entry<Card.Rank, List<Card>>> otherHandIterator = otherHand.getHandInformation().getRankGroup().entrySet().iterator();
                 final int highPairComparison = comparePairs(handIterator.next(), otherHandIterator.next());
-
                 if (highPairComparison != 0) {
                     return highPairComparison;
                 }
-
                 return compareHighCards(handIterator, otherHandIterator);
-
             }
-
         },
         TWO_PAIR(3) {
             @Override
             int tieBreaker(final FiveCardPokerHand hand,
                            final FiveCardPokerHand otherHand) {
 
-
-                final Iterator<Map.Entry<Card.Rank, List<Card>>> handIterator = hand.getHandGroupResult().getRankGroup().entrySet().iterator();
-                final Iterator<Map.Entry<Card.Rank, List<Card>>> otherHandIterator = otherHand.getHandGroupResult().getRankGroup().entrySet().iterator();
+                final Iterator<Map.Entry<Card.Rank, List<Card>>> handIterator = hand.getHandInformation().getRankGroup().entrySet().iterator();
+                final Iterator<Map.Entry<Card.Rank, List<Card>>> otherHandIterator = otherHand.getHandInformation().getRankGroup().entrySet().iterator();
 
                 final int highPairComparison = comparePairs(handIterator.next(), otherHandIterator.next());
 
@@ -86,8 +81,8 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
 
             private int straightRankComparison(final FiveCardPokerHand hand,
                                                final FiveCardPokerHand otherHand) {
-                return Integer.compare(hand.getHandGroupResult().getCards().last().getRank().getRankValue(),
-                        otherHand.getHandGroupResult().getCards().last().getRank().getRankValue());
+                return Integer.compare(hand.getHandInformation().getCards().last().getRank().getRankValue(),
+                                       otherHand.getHandInformation().getCards().last().getRank().getRankValue());
             }
         },
         FLUSH(7) {
@@ -99,45 +94,8 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
 
             private int flushRankComparison(final FiveCardPokerHand hand,
                                             final FiveCardPokerHand otherHand) {
-
-                final Card[] handCards = hand.getHandGroupResult().getCards().toArray(new Card[hand.getHandGroupResult().getCards().size()]);
-                final Card[] otherHandCards = otherHand.getHandGroupResult().getCards().toArray(new Card[hand.getHandGroupResult().getCards().size()]);
-
-                final int fifthCardCompare = Integer.compare(handCards[4].getRank().getRankValue(),
-                        otherHandCards[4].getRank().getRankValue());
-                if (fifthCardCompare != 0) {
-                    return fifthCardCompare;
-                }
-
-                final int fourthCardCompare = Integer.compare(handCards[3].getRank().getRankValue(),
-                        otherHandCards[3].getRank().getRankValue());
-
-                if (fourthCardCompare != 0) {
-                    return fourthCardCompare;
-                }
-
-                final int thirdCardCompare = Integer.compare(handCards[2].getRank().getRankValue(),
-                        otherHandCards[2].getRank().getRankValue());
-
-                if (thirdCardCompare != 0) {
-                    return thirdCardCompare;
-                }
-
-                final int secondCardCompare = Integer.compare(handCards[1].getRank().getRankValue(),
-                        otherHandCards[1].getRank().getRankValue());
-
-                if (secondCardCompare != 0) {
-                    return secondCardCompare;
-                }
-
-                final int firstCardCompare = Integer.compare(handCards[0].getRank().getRankValue(),
-                        otherHandCards[0].getRank().getRankValue());
-
-                if (firstCardCompare != 0) {
-                    return fifthCardCompare;
-                }
-
-                return TIE;
+                return Classification.compareHighCards(hand.getHandInformation().getRankGroup().entrySet().iterator(),
+                                                       otherHand.getHandInformation().getRankGroup().entrySet().iterator());
             }
         },
         FULL_HOUSE(8) {
@@ -173,8 +131,8 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
             @Override
             int tieBreaker(final FiveCardPokerHand hand,
                            final FiveCardPokerHand otherHand) {
-                return Integer.compare(hand.getHandGroupResult().getCards().last().getRank().getRankValue(),
-                        otherHand.getHandGroupResult().getCards().last().getRank().getRankValue());
+                return Integer.compare(hand.getHandInformation().getCards().last().getRank().getRankValue(),
+                        otherHand.getHandInformation().getCards().last().getRank().getRankValue());
             }
         },
         ROYAL_FLUSH(12) {
@@ -225,7 +183,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
         }
 
         private static Card.Rank extractSetRank(final FiveCardPokerHand hand) {
-            for (final Map.Entry<Card.Rank, List<Card>> entry : hand.getHandGroupResult().getRankGroup().entrySet()) {
+            for (final Map.Entry<Card.Rank, List<Card>> entry : hand.getHandInformation().getRankGroup().entrySet()) {
                 if (entry.getValue().size() == 3) {
                     return entry.getValue().iterator().next().getRank();
                 }
@@ -234,7 +192,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
         }
 
         private static Card.Rank extractPairRank(final FiveCardPokerHand hand) {
-            for (final Map.Entry<Card.Rank, List<Card>> entry : hand.getHandGroupResult().getRankGroup().entrySet()) {
+            for (final Map.Entry<Card.Rank, List<Card>> entry : hand.getHandInformation().getRankGroup().entrySet()) {
                 if (entry.getValue().size() == 2) {
                     return entry.getValue().iterator().next().getRank();
                 }
@@ -251,7 +209,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     FiveCardPokerHand(final Builder builder) {
-        this.handGroupResult = new HandGroupResult(builder.cards);
+        this.handGroupResult = new HandInformation(builder.cards);
         this.handClassification = classifyHand();
     }
 
@@ -259,7 +217,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
         return this.handClassification;
     }
 
-    HandGroupResult getHandGroupResult() {
+    HandInformation getHandInformation() {
         return this.handGroupResult;
     }
 
@@ -374,17 +332,17 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
 
     @Override
     public String toString() {
-        return this.getHandGroupResult().getCards().toString();
+        return this.getHandInformation().getCards().toString();
     }
 
-    static class HandGroupResult {
+    static class HandInformation {
         final SortedSet<Card> cards;
         final Map<Card.Rank, List<Card>> rankGroup;
         final Map<Card.Suit, List<Card>> suitGroup;
         final int setCount;
         final int pairCount;
 
-        HandGroupResult(final SortedSet<Card> cards) {
+        HandInformation(final SortedSet<Card> cards) {
             this.cards = cards;
             this.rankGroup = initRankGroup(cards);
             this.suitGroup = initSuitGroup(cards);
@@ -413,7 +371,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
         }
 
         private static Map<Card.Suit, List<Card>> initSuitGroup(final SortedSet<Card> cards) {
-            final TreeMap<Card.Suit, List<Card>> treeMap = new TreeMap<>(Comparator.reverseOrder());
+            final TreeMap<Card.Suit, List<Card>> treeMap = new TreeMap<>();
             treeMap.putAll(cards.stream()
                     .collect(Collectors.groupingBy(Card::getSuit)));
             return treeMap;

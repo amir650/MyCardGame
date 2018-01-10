@@ -3,7 +3,7 @@ import java.util.stream.IntStream;
 
 public class Main {
 
-    private static final int NUM_EXPERIMENTS = 10000000;
+    private static final int NUM_EXPERIMENTS = 50000000;
 
     public static void main(String[] args) {
 
@@ -19,10 +19,14 @@ public class Main {
             builder.addCard(deck.deal());
             final FiveCardPokerHand hand = builder.build();
             final FiveCardPokerHand.Classification classification = hand.getHandClassification();
+            if(classification == FiveCardPokerHand.Classification.FOUR_OF_A_KIND) {
+                System.out.println(hand);
+            }
             frequencyTable[classification.ordinal()]++;
         });
 
         System.out.println("Finished experiment with " + NUM_EXPERIMENTS + " iterations in " + (System.currentTimeMillis() - startTime) + " milliseconds");
         System.out.println(Arrays.toString(frequencyTable));
     }
+
 }
