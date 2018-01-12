@@ -127,8 +127,9 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
 
         final int classificationComparison =
                 Integer.compare(this.handClassification.getValue(), otherHand.handClassification.getValue());
+
         return classificationComparison != 0 ? classificationComparison :
-                deepHandCompare(this, otherHand);
+                                               deepHandCompare(this, otherHand);
     }
 
     private static int deepHandCompare(final FiveCardPokerHand hand,
@@ -235,9 +236,9 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
         final SortedSet<Card> cards;
         final Map<Card.Rank, List<Card>> rankGroup;
         final Map<Card.Suit, List<Card>> suitGroup;
+        final int quadCount;
         final int setCount;
         final int pairCount;
-        final int quadCount;
 
         HandInformation(final SortedSet<Card> cards) {
             this.cards = cards;
@@ -289,10 +290,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
         }
 
         private static Map<Card.Suit, List<Card>> initSuitGroup(final SortedSet<Card> cards) {
-            final TreeMap<Card.Suit, List<Card>> treeMap = new TreeMap<>();
-            treeMap.putAll(cards.stream()
-                    .collect(Collectors.groupingBy(Card::getSuit)));
-            return treeMap;
+            return new TreeMap<>(cards.stream().collect(Collectors.groupingBy(Card::getSuit)));
         }
 
         private int groupCount(final int count) {
