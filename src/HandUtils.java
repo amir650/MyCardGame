@@ -10,6 +10,7 @@ enum  HandUtils {
                                       final FiveCardPokerHand otherHand) {
         checkHandClassification(hand, FiveCardPokerHand.Classification.ROYAL_FLUSH);
         checkHandClassification(otherHand, FiveCardPokerHand.Classification.ROYAL_FLUSH);
+
         return TIE;
     }
 
@@ -17,6 +18,7 @@ enum  HandUtils {
                                          final FiveCardPokerHand otherHand) {
         checkHandClassification(hand, FiveCardPokerHand.Classification.STRAIGHT_FLUSH);
         checkHandClassification(otherHand, FiveCardPokerHand.Classification.STRAIGHT_FLUSH);
+
         return Integer.compare(hand.getHandInformation().getCards().last().getRank().getRankValue(),
                                otherHand.getHandInformation().getCards().last().getRank().getRankValue());
     }
@@ -25,6 +27,7 @@ enum  HandUtils {
                                               final FiveCardPokerHand otherHand) {
         checkHandClassification(hand, FiveCardPokerHand.Classification.STRAIGHT_FLUSH_WHEEL);
         checkHandClassification(otherHand, FiveCardPokerHand.Classification.STRAIGHT_FLUSH_WHEEL);
+
         return TIE;
     }
 
@@ -32,12 +35,14 @@ enum  HandUtils {
                                  final FiveCardPokerHand otherHand) {
         checkHandClassification(hand, FiveCardPokerHand.Classification.FOUR_OF_A_KIND);
         checkHandClassification(otherHand, FiveCardPokerHand.Classification.FOUR_OF_A_KIND);
+
         final int quadsCompare =
                 Integer.compare(hand.getHandInformation().getRankGroup().entrySet().iterator().next().getKey().getRankValue(),
                                 otherHand.getHandInformation().getRankGroup().entrySet().iterator().next().getKey().getRankValue());
         if (quadsCompare != 0) {
             return quadsCompare;
         }
+
         throw new RuntimeException("should not reach here in 5 card poker : " + hand + " vs " + otherHand);
     }
 
@@ -59,6 +64,7 @@ enum  HandUtils {
         if (pairCompare != 0) {
             return pairCompare;
         }
+
         throw new RuntimeException("wtf homey");
     }
 
@@ -83,6 +89,7 @@ enum  HandUtils {
                                  final FiveCardPokerHand otherHand) {
         checkHandClassification(hand, FiveCardPokerHand.Classification.WHEEL);
         checkHandClassification(otherHand, FiveCardPokerHand.Classification.WHEEL);
+
         return TIE;
     }
 
@@ -90,13 +97,16 @@ enum  HandUtils {
                                final FiveCardPokerHand otherHand) {
         checkHandClassification(hand, FiveCardPokerHand.Classification.SET);
         checkHandClassification(otherHand, FiveCardPokerHand.Classification.SET);
+
         final Iterator<Map.Entry<Card.Rank, List<Card>>> handIterator = hand.getHandInformation().getRankGroup().entrySet().iterator();
         final Iterator<Map.Entry<Card.Rank, List<Card>>> otherHandIterator = otherHand.getHandInformation().getRankGroup().entrySet().iterator();
         final int setCompare = Integer.compare(handIterator.next().getKey().getRankValue(),
                 otherHandIterator.next().getKey().getRankValue());
+
         if (setCompare != 0) {
             return setCompare;
         }
+
         throw new RuntimeException("should not reach here in 5 card poker : " + hand + " vs " + otherHand);
     }
 
@@ -128,13 +138,16 @@ enum  HandUtils {
                                 final FiveCardPokerHand otherHand) {
         checkHandClassification(hand, FiveCardPokerHand.Classification.PAIR);
         checkHandClassification(otherHand, FiveCardPokerHand.Classification.PAIR);
+
         final Iterator<Map.Entry<Card.Rank, List<Card>>> handIterator = hand.getHandInformation().getRankGroup().entrySet().iterator();
         final Iterator<Map.Entry<Card.Rank, List<Card>>> otherHandIterator = otherHand.getHandInformation().getRankGroup().entrySet().iterator();
         final int highPairComparison =
                 Integer.compare(handIterator.next().getKey().getRankValue(), otherHandIterator.next().getKey().getRankValue());
+
         if (highPairComparison != 0) {
             return highPairComparison;
         }
+
         return iterateAndCompareHighCard(handIterator, otherHandIterator);
     }
 
@@ -142,8 +155,10 @@ enum  HandUtils {
                                     final FiveCardPokerHand otherHand) {
         checkHandClassification(hand, FiveCardPokerHand.Classification.HIGH_CARD);
         checkHandClassification(otherHand, FiveCardPokerHand.Classification.HIGH_CARD);
+
         final Iterator<Map.Entry<Card.Rank, List<Card>>> handIterator = hand.getHandInformation().getRankGroup().entrySet().iterator();
         final Iterator<Map.Entry<Card.Rank, List<Card>>> otherHandIterator = otherHand.getHandInformation().getRankGroup().entrySet().iterator();
+
         return iterateAndCompareHighCard(handIterator, otherHandIterator);
     }
 

@@ -205,12 +205,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     private boolean isFourOfAKind() {
-        for (final Map.Entry<Card.Rank, List<Card>> entry : this.handGroupResult.getRankGroup().entrySet()) {
-            if (entry.getValue().size() == 4) {
-                return true;
-            }
-        }
-        return false;
+        return this.handGroupResult.getRankGroup().entrySet().iterator().next().getValue().size() == 4;
     }
 
     private boolean isStraightFlush() {
@@ -242,13 +237,35 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
         final Map<Card.Suit, List<Card>> suitGroup;
         final int setCount;
         final int pairCount;
+        final int quadCount;
 
         HandInformation(final SortedSet<Card> cards) {
             this.cards = cards;
             this.rankGroup = initRankGroup(cards);
             this.suitGroup = initSuitGroup(cards);
-            this.setCount = calculateSetCount();
-            this.pairCount = calculatePairCount();
+            this.quadCount = groupCount(4);
+            this.setCount = groupCount(3);
+            this.pairCount = groupCount(2);
+        }
+
+        Map<Card.Rank, List<Card>> getRankGroup() {
+            return this.rankGroup;
+        }
+
+        Map<Card.Suit, List<Card>> getSuitGroup() {
+            return this.suitGroup;
+        }
+
+        SortedSet<Card> getCards() {
+            return this.cards;
+        }
+
+        int getSetCount() {
+            return this.setCount;
+        }
+
+        int getPairCount() {
+            return this.pairCount;
         }
 
         private static Map<Card.Rank, List<Card>> initRankGroup(final SortedSet<Card> cards) {
@@ -278,44 +295,14 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
             return treeMap;
         }
 
-        private int calculateSetCount() {
-            int numSets = 0;
+        private int groupCount(final int count) {
+            int matches = 0;
             for (final Map.Entry<Card.Rank, List<Card>> entry : this.rankGroup.entrySet()) {
-                if (entry.getValue().size() == 3) {
-                    numSets++;
+                if (entry.getValue().size() == count) {
+                    matches++;
                 }
             }
-            return numSets;
-        }
-
-        private int calculatePairCount() {
-            int numPairs = 0;
-            for (final Map.Entry<Card.Rank, List<Card>> entry : this.rankGroup.entrySet()) {
-                if (entry.getValue().size() == 2) {
-                    numPairs++;
-                }
-            }
-            return numPairs;
-        }
-
-        Map<Card.Rank, List<Card>> getRankGroup() {
-            return this.rankGroup;
-        }
-
-        Map<Card.Suit, List<Card>> getSuitGroup() {
-            return this.suitGroup;
-        }
-
-        SortedSet<Card> getCards() {
-            return this.cards;
-        }
-
-        int getSetCount() {
-            return this.setCount;
-        }
-
-        int getPairCount() {
-            return this.pairCount;
+            return matches;
         }
     }
 
