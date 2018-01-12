@@ -65,7 +65,7 @@ enum  HandUtils {
             return pairCompare;
         }
 
-        throw new RuntimeException("wtf homey");
+        throw new RuntimeException("should not reach here in 5 card poker : " + hand + " vs " + otherHand);
     }
 
     static int compareFlushHands(final FiveCardPokerHand hand,
@@ -131,7 +131,6 @@ enum  HandUtils {
         }
 
         return iterateAndCompareHighCard(handIterator, otherHandIterator);
-
     }
 
     static int comparePairHands(final FiveCardPokerHand hand,
