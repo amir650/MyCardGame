@@ -19,8 +19,8 @@ enum  HandUtils {
         checkHandClassification(hand, FiveCardPokerHand.Classification.STRAIGHT_FLUSH);
         checkHandClassification(otherHand, FiveCardPokerHand.Classification.STRAIGHT_FLUSH);
 
-        return Integer.compare(hand.getHandInformation().getCards().last().getRank().getRankValue(),
-                               otherHand.getHandInformation().getCards().last().getRank().getRankValue());
+        return Integer.compare(hand.getHandAnalyzer().getCards().last().getRank().getRankValue(),
+                               otherHand.getHandAnalyzer().getCards().last().getRank().getRankValue());
     }
 
     static int compareStraightFlushWheelHands(final FiveCardPokerHand hand,
@@ -81,8 +81,8 @@ enum  HandUtils {
 
     static int compareStraightHands(final FiveCardPokerHand hand,
                                     final FiveCardPokerHand otherHand) {
-        return Integer.compare(hand.getHandInformation().getCards().last().getRank().getRankValue(),
-                               otherHand.getHandInformation().getCards().last().getRank().getRankValue());
+        return Integer.compare(hand.getHandAnalyzer().getCards().last().getRank().getRankValue(),
+                               otherHand.getHandAnalyzer().getCards().last().getRank().getRankValue());
     }
 
     static int compareWheelHands(final FiveCardPokerHand hand,

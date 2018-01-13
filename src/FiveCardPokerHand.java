@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
 
     private final Classification handClassification;
-    private final HandInformation handInformation;
+    private final HandAnalyzer handAnalyzer;
 
     private static final int POKER_HAND_SIZE = 5;
 
@@ -110,7 +110,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     FiveCardPokerHand(final Builder builder) {
-        this.handInformation = new HandInformation(builder.cards);
+        this.handAnalyzer = new HandAnalyzer(builder.cards);
         this.handClassification = classifyHand();
     }
 
@@ -118,12 +118,12 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
         return this.handClassification;
     }
 
-    HandInformation getHandInformation() {
-        return this.handInformation;
+    HandAnalyzer getHandAnalyzer() {
+        return this.handAnalyzer;
     }
 
     Iterator<Map.Entry<Card.Rank, List<Card>>> getHandRankIterator() {
-        return this.handInformation.getRankGroup().entrySet().iterator();
+        return this.handAnalyzer.getRankGroup().entrySet().iterator();
     }
 
     @Override
@@ -171,19 +171,19 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     private boolean isPair() {
-        return this.handInformation.getPairCount() == 1;
+        return this.handAnalyzer.getPairCount() == 1;
     }
 
     private boolean isTwoPair() {
-        return this.handInformation.getPairCount() == 2;
+        return this.handAnalyzer.getPairCount() == 2;
     }
 
     private boolean isSet() {
-        return this.handInformation.getSetCount() == 1;
+        return this.handAnalyzer.getSetCount() == 1;
     }
 
     private boolean isNormalStraight() {
-        final Card[] cardArray = this.handInformation.getCards().toArray(new Card[this.handInformation.getCards().size()]);
+        final Card[] cardArray = this.handAnalyzer.getCards().toArray(new Card[this.handAnalyzer.getCards().size()]);
         for (int i = 0; i < cardArray.length - 1; i++) {
             if (cardArray[i].getRank().getRankValue() != cardArray[i + 1].getRank().getRankValue() - 1) {
                 return false;
@@ -193,7 +193,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     private boolean isWheel() {
-        final Card[] cardArray = this.handInformation.getCards().toArray(new Card[this.handInformation.getCards().size()]);
+        final Card[] cardArray = this.handAnalyzer.getCards().toArray(new Card[this.handAnalyzer.getCards().size()]);
         return (cardArray[0].getRank().equals(Card.Rank.TWO)) &&
                 (cardArray[1].getRank().equals(Card.Rank.THREE)) &&
                 (cardArray[2].getRank().equals(Card.Rank.FOUR)) &&
@@ -202,15 +202,15 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     private boolean isFlush() {
-        return this.handInformation.getSuitGroup().size() == 1;
+        return this.handAnalyzer.getSuitGroup().size() == 1;
     }
 
     private boolean isFullHouse() {
-        return this.handInformation.getPairCount() == 1 && this.handInformation.getSetCount() == 1;
+        return this.handAnalyzer.getPairCount() == 1 && this.handAnalyzer.getSetCount() == 1;
     }
 
     private boolean isFourOfAKind() {
-        return this.handInformation.getRankGroup().entrySet().iterator().next().getValue().size() == 4;
+        return this.handAnalyzer.getRankGroup().entrySet().iterator().next().getValue().size() == 4;
     }
 
     private boolean isStraightFlush() {
@@ -222,7 +222,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     private boolean isRoyalFlush() {
-        final Card[] cardArray = this.handInformation.getCards().toArray(new Card[this.handInformation.getCards().size()]);
+        final Card[] cardArray = this.handAnalyzer.getCards().toArray(new Card[this.handAnalyzer.getCards().size()]);
         return cardArray[0].getRank().equals(Card.Rank.TEN) &&
                 cardArray[1].getRank().equals(Card.Rank.JACK) &&
                 cardArray[2].getRank().equals(Card.Rank.QUEEN) &&
@@ -233,10 +233,10 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
 
     @Override
     public String toString() {
-        return this.getHandInformation().getCards().toString();
+        return this.getHandAnalyzer().getCards().toString();
     }
 
-    static class HandInformation {
+    static class HandAnalyzer {
         final SortedSet<Card> cards;
         final Map<Card.Rank, List<Card>> rankGroup;
         final Map<Card.Suit, List<Card>> suitGroup;
@@ -244,7 +244,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
         final int setCount;
         final int pairCount;
 
-        HandInformation(final SortedSet<Card> cards) {
+        HandAnalyzer(final SortedSet<Card> cards) {
             this.cards = cards;
             this.rankGroup = initRankGroup(cards);
             this.suitGroup = initSuitGroup(cards);
