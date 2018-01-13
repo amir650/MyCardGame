@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
 
     private final Classification handClassification;
-    private final HandInformation handGroupResult;
+    private final HandInformation handInformation;
 
     private static final int POKER_HAND_SIZE = 5;
 
@@ -110,7 +110,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     FiveCardPokerHand(final Builder builder) {
-        this.handGroupResult = new HandInformation(builder.cards);
+        this.handInformation = new HandInformation(builder.cards);
         this.handClassification = classifyHand();
     }
 
@@ -119,7 +119,11 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     HandInformation getHandInformation() {
-        return this.handGroupResult;
+        return this.handInformation;
+    }
+
+    Iterator<Map.Entry<Card.Rank, List<Card>>> getHandRankIterator() {
+        return this.handInformation.getRankGroup().entrySet().iterator();
     }
 
     @Override
@@ -167,19 +171,19 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     private boolean isPair() {
-        return this.handGroupResult.getPairCount() == 1;
+        return this.handInformation.getPairCount() == 1;
     }
 
     private boolean isTwoPair() {
-        return this.handGroupResult.getPairCount() == 2;
+        return this.handInformation.getPairCount() == 2;
     }
 
     private boolean isSet() {
-        return this.handGroupResult.getSetCount() == 1;
+        return this.handInformation.getSetCount() == 1;
     }
 
     private boolean isNormalStraight() {
-        final Card[] cardArray = this.handGroupResult.getCards().toArray(new Card[this.handGroupResult.getCards().size()]);
+        final Card[] cardArray = this.handInformation.getCards().toArray(new Card[this.handInformation.getCards().size()]);
         for (int i = 0; i < cardArray.length - 1; i++) {
             if (cardArray[i].getRank().getRankValue() != cardArray[i + 1].getRank().getRankValue() - 1) {
                 return false;
@@ -189,7 +193,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     private boolean isWheel() {
-        final Card[] cardArray = this.handGroupResult.getCards().toArray(new Card[this.handGroupResult.getCards().size()]);
+        final Card[] cardArray = this.handInformation.getCards().toArray(new Card[this.handInformation.getCards().size()]);
         return (cardArray[0].getRank().equals(Card.Rank.TWO)) &&
                 (cardArray[1].getRank().equals(Card.Rank.THREE)) &&
                 (cardArray[2].getRank().equals(Card.Rank.FOUR)) &&
@@ -198,15 +202,15 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     private boolean isFlush() {
-        return this.handGroupResult.getSuitGroup().size() == 1;
+        return this.handInformation.getSuitGroup().size() == 1;
     }
 
     private boolean isFullHouse() {
-        return this.handGroupResult.getPairCount() == 1 && this.handGroupResult.getSetCount() == 1;
+        return this.handInformation.getPairCount() == 1 && this.handInformation.getSetCount() == 1;
     }
 
     private boolean isFourOfAKind() {
-        return this.handGroupResult.getRankGroup().entrySet().iterator().next().getValue().size() == 4;
+        return this.handInformation.getRankGroup().entrySet().iterator().next().getValue().size() == 4;
     }
 
     private boolean isStraightFlush() {
@@ -218,7 +222,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     private boolean isRoyalFlush() {
-        final Card[] cardArray = this.handGroupResult.getCards().toArray(new Card[this.handGroupResult.getCards().size()]);
+        final Card[] cardArray = this.handInformation.getCards().toArray(new Card[this.handInformation.getCards().size()]);
         return cardArray[0].getRank().equals(Card.Rank.TEN) &&
                 cardArray[1].getRank().equals(Card.Rank.JACK) &&
                 cardArray[2].getRank().equals(Card.Rank.QUEEN) &&
