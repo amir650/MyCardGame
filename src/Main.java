@@ -7,7 +7,6 @@ public class Main {
 
     public static void main(String[] args) {
         runExp1();
-        System.out.println("\n");
         runExp2();
     }
 
@@ -28,7 +27,7 @@ public class Main {
         });
 
         System.out.println("Finished experiment with " + NUM_EXPERIMENTS + " iterations in " + (System.currentTimeMillis() - startTime) + " milliseconds");
-        System.out.println(Arrays.toString(frequencyTable));
+        System.out.println(Arrays.toString(frequencyTable) + "\n");
     }
 
     private static void runExp2() {
