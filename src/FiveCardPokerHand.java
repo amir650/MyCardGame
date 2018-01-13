@@ -233,7 +233,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
 
     @Override
     public String toString() {
-        return this.getHandAnalyzer().getCards().toString();
+        return this.handClassification + "::" + this.getHandAnalyzer().getCards().toString();
     }
 
     static class HandAnalyzer {

@@ -171,4 +171,35 @@ public class TestHandComparison {
 
     }
 
+    @Test
+    public void testFailure() {
+       // [FOUR of SPADES, NINE of DIAMONDS, JACK of DIAMONDS, JACK of CLUBS, JACK of SPADES]
+       // [FOUR of DIAMONDS, FIVE of HEARTS, JACK of DIAMONDS, JACK of CLUBS, JACK of SPADES]
+
+        final FiveCardPokerHand.Builder builder = new FiveCardPokerHand.Builder();
+
+        builder.addCard(Optional.of(new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS)));
+        builder.addCard(Optional.of(new Card(Card.Rank.NINE, Card.Suit.HEARTS)));
+        builder.addCard(Optional.of(new Card(Card.Rank.JACK, Card.Suit.DIAMONDS)));
+        builder.addCard(Optional.of(new Card(Card.Rank.JACK, Card.Suit.CLUBS)));
+        builder.addCard(Optional.of(new Card(Card.Rank.JACK, Card.Suit.SPADES)));
+
+        final FiveCardPokerHand hand = builder.build();
+
+        final FiveCardPokerHand.Builder builder2 = new FiveCardPokerHand.Builder();
+
+        builder2.addCard(Optional.of(new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS)));
+        builder2.addCard(Optional.of(new Card(Card.Rank.FIVE, Card.Suit.HEARTS)));
+        builder2.addCard(Optional.of(new Card(Card.Rank.JACK, Card.Suit.DIAMONDS)));
+        builder2.addCard(Optional.of(new Card(Card.Rank.JACK, Card.Suit.CLUBS)));
+        builder2.addCard(Optional.of(new Card(Card.Rank.JACK, Card.Suit.SPADES)));
+
+        final FiveCardPokerHand otherHand = builder2.build();
+
+        final int result = hand.compareTo(otherHand);
+
+        assertEquals(result, -1);
+
+    }
+
 }
