@@ -3,7 +3,7 @@ import java.util.stream.IntStream;
 
 public class Main {
 
-    private static final int NUM_EXPERIMENTS = 5000000;
+    private static final int NUM_EXPERIMENTS = 1000000;
 
     public static void main(String[] args) {
         runExp1();
