@@ -210,7 +210,7 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
     }
 
     private boolean isFourOfAKind() {
-        return this.handAnalyzer.getRankGroup().entrySet().iterator().next().getValue().size() == 4;
+        return this.handAnalyzer.getQuadCount() == 1;
     }
 
     private boolean isStraightFlush() {
@@ -263,6 +263,10 @@ public class FiveCardPokerHand implements Comparable<FiveCardPokerHand> {
 
         SortedSet<Card> getCards() {
             return this.cards;
+        }
+
+        int getQuadCount() {
+            return this.quadCount;
         }
 
         int getSetCount() {
