@@ -55,11 +55,11 @@ public class Main {
 
             final int comparison = hand.compareTo(hand2);
 
-            if(comparison == -1) {
+            if(comparison < 0) {
                 frequencyTable[0]++;
             } else if(comparison == 0) {
                 frequencyTable[1]++;
-            } else if(comparison == 1) {
+            } else if(comparison > 0) {
                 frequencyTable[2]++;
             } else {
                 throw new RuntimeException("WTF");
