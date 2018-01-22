@@ -1,9 +1,14 @@
+package com.cardgames.fivecardpoker;
+
+import com.cardgames.Classification;
+import com.cardgames.Deck;
+
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class Main {
 
-    private static final int NUM_EXPERIMENTS = 1000000;
+    private static final int NUM_EXPERIMENTS = 10000000;
 
     public static void main(String[] args) {
         runExp1();
@@ -12,7 +17,7 @@ public class Main {
 
     private static void runExp1() {
         final long startTime = System.currentTimeMillis();
-        final int[] frequencyTable = new int[FiveCardPokerHand.Classification.values().length];
+        final int[] frequencyTable = new int[Classification.values().length];
 
         IntStream.range(0, NUM_EXPERIMENTS).mapToObj(i -> new FiveCardPokerHand.Builder()).forEach(builder -> {
             final Deck deck = Deck.newShuffledSingleDeck();
@@ -22,7 +27,7 @@ public class Main {
             builder.addCard(deck.deal());
             builder.addCard(deck.deal());
             final FiveCardPokerHand hand = builder.build();
-            final FiveCardPokerHand.Classification classification = hand.getHandClassification();
+            final Classification classification = hand.getClassification();
             frequencyTable[classification.ordinal()]++;
         });
 
@@ -33,6 +38,7 @@ public class Main {
     private static void runExp2() {
         final long startTime = System.currentTimeMillis();
         final int[] frequencyTable = new int[3];
+        final FiveCardHandComparator comparator = new FiveCardHandComparator();
 
         IntStream.range(0, NUM_EXPERIMENTS).forEach(i -> {
             final Deck deck = Deck.newShuffledSingleDeck();
@@ -52,7 +58,7 @@ public class Main {
             builder2.addCard(deck.deal());
             final FiveCardPokerHand hand2 = builder2.build();
 
-            final int comparison = hand.compareTo(hand2);
+            final int comparison = comparator.compare(hand, hand2);
 
             if(comparison == -1) {
                 frequencyTable[0]++;

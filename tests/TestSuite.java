@@ -4,8 +4,9 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({TestDeck.class,
-                     TestHandComparison.class,
-                     TestHandIdentification.class
+                     TestFiveCardHandComparison.class,
+                     TestHoldemHandComparison.class,
+                     TestFiveCardHandIdentification.class
                      })
 public class TestSuite {
 }

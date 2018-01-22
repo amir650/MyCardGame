@@ -1,3 +1,5 @@
+package com.cardgames;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +21,8 @@ public class Card implements Comparable<Card> {
         return Collections.unmodifiableMap(cache);
     }
 
-    public static Card getCard(final Rank rank,
-                               final Suit suit) {
+    static Card getCard(final Rank rank,
+                        final Suit suit) {
         final Card card = CARD_CACHE.get(cardKey(rank, suit));
         if (card != null) {
             return card;
@@ -41,7 +43,7 @@ public class Card implements Comparable<Card> {
         return rank + " of " + suit;
     }
 
-    Card(final Rank rank,
+    public Card(final Rank rank,
          final Suit suit) {
         this.rank = rank;
         this.suit = suit;
@@ -75,49 +77,6 @@ public class Card implements Comparable<Card> {
         int result = this.rank != null ? this.rank.hashCode() : 0;
         result = 31 * result + (this.suit != null ? this.suit.hashCode() : 0);
         return result;
-    }
-
-    enum Suit {
-        DIAMONDS(1),
-        CLUBS(2),
-        HEARTS(3),
-        SPADES(4);
-
-        private final int suitValue;
-
-        Suit(final int suitValue) {
-            this.suitValue = suitValue;
-        }
-
-        public int getSuitValue() {
-            return this.suitValue;
-        }
-    }
-
-    enum Rank {
-        TWO(2),
-        THREE(3),
-        FOUR(4),
-        FIVE(5),
-        SIX(6),
-        SEVEN(7),
-        EIGHT(8),
-        NINE(9),
-        TEN(10),
-        JACK(11),
-        QUEEN(12),
-        KING(13),
-        ACE(14);
-
-        private final int rankValue;
-
-        Rank(final int rankValue) {
-            this.rankValue = rankValue;
-        }
-
-        public int getRankValue() {
-            return this.rankValue;
-        }
     }
 
 }

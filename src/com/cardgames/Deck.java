@@ -1,3 +1,5 @@
+package com.cardgames;
+
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Stack;
@@ -13,8 +15,8 @@ public class Deck {
 
     private Stack<Card> initDeck(boolean shouldShuffle) {
         final Stack<Card> deckCards = new Stack<>();
-        for(final Card.Suit suit : Card.Suit.values()) {
-            for(final Card.Rank rank : Card.Rank.values()) {
+        for(final Suit suit : Suit.values()) {
+            for(final Rank rank : Rank.values()) {
                 deckCards.push(Card.getCard(rank, suit));
             }
         }
