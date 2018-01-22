@@ -1,6 +1,10 @@
-package com.cardgames.holdem;
+package com.cardgames.poker.holdem;
 
-import com.cardgames.*;
+import com.cardgames.cards.Card;
+import com.cardgames.poker.Hand;
+import com.cardgames.cards.Rank;
+import com.cardgames.poker.Classification;
+import com.cardgames.poker.HandClassifier;
 
 import java.util.*;
 import java.util.stream.Collectors;

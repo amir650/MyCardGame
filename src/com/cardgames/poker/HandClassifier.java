@@ -1,4 +1,4 @@
-package com.cardgames;
+package com.cardgames.poker;
 
 public interface HandClassifier {
 

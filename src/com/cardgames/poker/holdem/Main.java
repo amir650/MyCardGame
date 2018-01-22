@@ -1,8 +1,8 @@
-package com.cardgames.holdem;
+package com.cardgames.poker.holdem;
 
-import com.cardgames.Classification;
-import com.cardgames.Deck;
-import com.cardgames.fivecardpoker.FiveCardPokerHand;
+import com.cardgames.poker.Classification;
+import com.cardgames.cards.Deck;
+import com.cardgames.poker.fivecardpoker.FiveCardPokerHand;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;

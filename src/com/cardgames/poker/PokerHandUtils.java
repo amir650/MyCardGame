@@ -1,11 +1,15 @@
-package com.cardgames;
+package com.cardgames.poker;
+
+import com.cardgames.cards.Card;
+import com.cardgames.cards.Rank;
+import com.cardgames.cards.Suit;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public enum HandUtils {
+public enum PokerHandUtils {
 ;   //no instance
     public static final int TIE = 0;
 

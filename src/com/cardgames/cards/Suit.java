@@ -1,4 +1,4 @@
-package com.cardgames;
+package com.cardgames.cards;
 
 public enum Suit {
     DIAMONDS(1),

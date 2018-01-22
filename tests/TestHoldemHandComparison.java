@@ -1,8 +1,8 @@
-import com.cardgames.Card;
-import com.cardgames.Rank;
-import com.cardgames.Suit;
-import com.cardgames.holdem.HoldemHand;
-import com.cardgames.holdem.HoldemHandComparator;
+import com.cardgames.cards.Card;
+import com.cardgames.cards.Rank;
+import com.cardgames.cards.Suit;
+import com.cardgames.poker.holdem.HoldemHand;
+import com.cardgames.poker.holdem.HoldemHandComparator;
 import org.junit.Test;
 
 import java.util.HashSet;

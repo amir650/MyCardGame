@@ -1,6 +1,10 @@
-package com.cardgames.fivecardpoker;
+package com.cardgames.poker.fivecardpoker;
 
-import com.cardgames.*;
+import com.cardgames.cards.Card;
+import com.cardgames.poker.Hand;
+import com.cardgames.cards.Rank;
+import com.cardgames.poker.Classification;
+import com.cardgames.poker.HandClassifier;
 
 import java.util.*;
 

@@ -1,6 +1,10 @@
-package com.cardgames.fivecardpoker;
+package com.cardgames.poker.fivecardpoker;
 
-import com.cardgames.*;
+import com.cardgames.cards.Card;
+import com.cardgames.poker.Hand;
+import com.cardgames.cards.Rank;
+import com.cardgames.poker.Classification;
+import com.cardgames.poker.PokerHandUtils;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -67,16 +71,16 @@ public class FiveCardHandComparator implements Comparator<FiveCardPokerHand> {
 
     private static int compareRoyalFlushHands(final Hand hand,
                                               final Hand otherHand) {
-        HandUtils.checkHandClassification(hand, Classification.ROYAL_FLUSH);
-        HandUtils.checkHandClassification(otherHand, Classification.ROYAL_FLUSH);
+        PokerHandUtils.checkHandClassification(hand, Classification.ROYAL_FLUSH);
+        PokerHandUtils.checkHandClassification(otherHand, Classification.ROYAL_FLUSH);
 
-        return HandUtils.TIE;
+        return PokerHandUtils.TIE;
     }
 
     private static int compareStraightFlushHands(final Hand hand,
                                                  final Hand otherHand) {
-        HandUtils.checkHandClassification(hand, Classification.STRAIGHT_FLUSH);
-        HandUtils.checkHandClassification(otherHand, Classification.STRAIGHT_FLUSH);
+        PokerHandUtils.checkHandClassification(hand, Classification.STRAIGHT_FLUSH);
+        PokerHandUtils.checkHandClassification(otherHand, Classification.STRAIGHT_FLUSH);
 
         return Integer.compare(hand.getHandAnalyzer().getCards().last().getRank().getRankValue(),
                                otherHand.getHandAnalyzer().getCards().last().getRank().getRankValue());
@@ -84,16 +88,16 @@ public class FiveCardHandComparator implements Comparator<FiveCardPokerHand> {
 
     private static int compareStraightFlushWheelHands(final Hand hand,
                                                      final Hand otherHand) {
-        HandUtils.checkHandClassification(hand, Classification.STRAIGHT_FLUSH_WHEEL);
-        HandUtils.checkHandClassification(otherHand, Classification.STRAIGHT_FLUSH_WHEEL);
+        PokerHandUtils.checkHandClassification(hand, Classification.STRAIGHT_FLUSH_WHEEL);
+        PokerHandUtils.checkHandClassification(otherHand, Classification.STRAIGHT_FLUSH_WHEEL);
 
-        return HandUtils.TIE;
+        return PokerHandUtils.TIE;
     }
 
     private static int compareQuadsHands(final Hand hand,
                                         final Hand otherHand) {
-        HandUtils.checkHandClassification(hand, Classification.FOUR_OF_A_KIND);
-        HandUtils.checkHandClassification(otherHand, Classification.FOUR_OF_A_KIND);
+        PokerHandUtils.checkHandClassification(hand, Classification.FOUR_OF_A_KIND);
+        PokerHandUtils.checkHandClassification(otherHand, Classification.FOUR_OF_A_KIND);
 
         final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
         final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
@@ -110,8 +114,8 @@ public class FiveCardHandComparator implements Comparator<FiveCardPokerHand> {
 
     private static int compareFullHouseHands(final Hand hand,
                                             final Hand otherHand) {
-        HandUtils.checkHandClassification(hand, Classification.FULL_HOUSE);
-        HandUtils.checkHandClassification(otherHand, Classification.FULL_HOUSE);
+        PokerHandUtils.checkHandClassification(hand, Classification.FULL_HOUSE);
+        PokerHandUtils.checkHandClassification(otherHand, Classification.FULL_HOUSE);
 
         final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
         final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
@@ -132,8 +136,8 @@ public class FiveCardHandComparator implements Comparator<FiveCardPokerHand> {
 
     private static int compareFlushHands(final Hand hand,
                                         final Hand otherHand) {
-        HandUtils.checkHandClassification(hand, Classification.FLUSH);
-        HandUtils.checkHandClassification(otherHand, Classification.FLUSH);
+        PokerHandUtils.checkHandClassification(hand, Classification.FLUSH);
+        PokerHandUtils.checkHandClassification(otherHand, Classification.FLUSH);
 
         final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
         final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
@@ -149,16 +153,16 @@ public class FiveCardHandComparator implements Comparator<FiveCardPokerHand> {
 
     private static int compareWheelHands(final Hand hand,
                                         final Hand otherHand) {
-        HandUtils.checkHandClassification(hand, Classification.WHEEL);
-        HandUtils.checkHandClassification(otherHand, Classification.WHEEL);
+        PokerHandUtils.checkHandClassification(hand, Classification.WHEEL);
+        PokerHandUtils.checkHandClassification(otherHand, Classification.WHEEL);
 
-        return HandUtils.TIE;
+        return PokerHandUtils.TIE;
     }
 
     private static int compareSetHands(final Hand hand,
                                       final Hand otherHand) {
-        HandUtils.checkHandClassification(hand, Classification.SET);
-        HandUtils.checkHandClassification(otherHand, Classification.SET);
+        PokerHandUtils.checkHandClassification(hand, Classification.SET);
+        PokerHandUtils.checkHandClassification(otherHand, Classification.SET);
 
         final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
         final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
@@ -174,8 +178,8 @@ public class FiveCardHandComparator implements Comparator<FiveCardPokerHand> {
 
     private static int compareTwoPairHands(final Hand hand,
                                           final Hand otherHand) {
-        HandUtils.checkHandClassification(hand, Classification.TWO_PAIR);
-        HandUtils.checkHandClassification(otherHand, Classification.TWO_PAIR);
+        PokerHandUtils.checkHandClassification(hand, Classification.TWO_PAIR);
+        PokerHandUtils.checkHandClassification(otherHand, Classification.TWO_PAIR);
 
         final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
         final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
@@ -197,8 +201,8 @@ public class FiveCardHandComparator implements Comparator<FiveCardPokerHand> {
 
     private static int comparePairHands(final Hand hand,
                                        final Hand otherHand) {
-        HandUtils.checkHandClassification(hand, Classification.PAIR);
-        HandUtils.checkHandClassification(otherHand, Classification.PAIR);
+        PokerHandUtils.checkHandClassification(hand, Classification.PAIR);
+        PokerHandUtils.checkHandClassification(otherHand, Classification.PAIR);
 
         final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
         final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
@@ -214,8 +218,8 @@ public class FiveCardHandComparator implements Comparator<FiveCardPokerHand> {
 
     private static int compareHighCardHands(final Hand hand,
                                            final Hand otherHand) {
-        HandUtils.checkHandClassification(hand, Classification.HIGH_CARD);
-        HandUtils.checkHandClassification(otherHand, Classification.HIGH_CARD);
+        PokerHandUtils.checkHandClassification(hand, Classification.HIGH_CARD);
+        PokerHandUtils.checkHandClassification(otherHand, Classification.HIGH_CARD);
 
         final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
         final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
@@ -232,7 +236,7 @@ public class FiveCardHandComparator implements Comparator<FiveCardPokerHand> {
                 return rankComparison;
             }
         }
-        return HandUtils.TIE;
+        return PokerHandUtils.TIE;
     }
 
 }

@@ -1,4 +1,4 @@
-import com.cardgames.Deck;
+import com.cardgames.cards.Deck;
 import org.junit.Test;
 
 import java.util.stream.IntStream;

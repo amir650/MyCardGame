@@ -1,18 +1,23 @@
-package com.cardgames.holdem;
+package com.cardgames.poker.fivecardpoker;
 
-import com.cardgames.*;
+import com.cardgames.cards.Card;
+import com.cardgames.cards.Rank;
+import com.cardgames.cards.Suit;
+import com.cardgames.poker.Classification;
+import com.cardgames.poker.HandClassifier;
+import com.cardgames.poker.PokerHandUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 import java.util.stream.Collectors;
 
-public class HoldemHandClassifier implements HandClassifier {
+public class FiveCardHandClassifier implements HandClassifier {
 
-    private final HoldemHandAnalyzer handAnalyzer;
+    private final FiveCardHandAnalyzer handAnalyzer;
 
-    HoldemHandClassifier(final HoldemHandAnalyzer handAnalyzer) {
+    FiveCardHandClassifier(final FiveCardHandAnalyzer handAnalyzer) {
         this.handAnalyzer = handAnalyzer;
     }
 
@@ -92,33 +97,18 @@ public class HoldemHandClassifier implements HandClassifier {
     }
 
     private boolean isStraightFlush() {
-        final Map<Suit, List<Card>> suitGroup = this.handAnalyzer.getSuitGroup();
-        for(Map.Entry<Suit, List<Card>> entry : suitGroup.entrySet()) {
-            if(entry.getValue().size() == 5) {
-                final Card[] cardArray = entry.getValue().toArray(new Card[entry.getValue().size()]);
-                for (int i = 0; i < cardArray.length - 1; i++) {
-                    if (cardArray[i].getRank().getRankValue() != cardArray[i + 1].getRank().getRankValue() - 1) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return false;
+        return isFlush() && isNormalStraight();
     }
 
     private boolean isStraightFlushWheel() {
-        final List<Card> handRanks = new ArrayList<>(this.handAnalyzer.getCards());
-        return handRanks.containsAll(HandUtils.STRAIGHT_WHEEL_SPADES) ||
-               handRanks.containsAll(HandUtils.STRAIGHT_WHEEL_HEARTS) ||
-               handRanks.containsAll(HandUtils.STRAIGHT_WHEEL_CLUBS)  ||
-               handRanks.containsAll(HandUtils.STRAIGHT_WHEEL_DIAMONDS);
+        return isFlush() && isWheel();
     }
 
     private boolean isRoyalFlush() {
-        final List<Card> handRanks = new ArrayList<>(this.handAnalyzer.getCards());
-        return handRanks.containsAll(HandUtils.ROYAL_FLUSH_SPADES) ||
-                handRanks.containsAll(HandUtils.ROYAL_FLUSH_HEARTS) ||
-                handRanks.containsAll(HandUtils.ROYAL_FLUSH_CLUBS) ||
-                handRanks.containsAll(HandUtils.ROYAL_FLUSH_DIAMONDS);
+        final SortedSet<Card> cards = this.handAnalyzer.getCards();
+        return  cards.containsAll(PokerHandUtils.ROYAL_FLUSH_SPADES) ||
+                cards.containsAll(PokerHandUtils.ROYAL_FLUSH_HEARTS) ||
+                cards.containsAll(PokerHandUtils.ROYAL_FLUSH_CLUBS)  ||
+                cards.containsAll(PokerHandUtils.ROYAL_FLUSH_DIAMONDS);
     }
 }

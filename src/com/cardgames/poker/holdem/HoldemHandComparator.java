@@ -1,9 +1,9 @@
-package com.cardgames.holdem;
+package com.cardgames.poker.holdem;
 
-import com.cardgames.Card;
-import com.cardgames.Classification;
-import com.cardgames.Hand;
-import com.cardgames.Rank;
+import com.cardgames.cards.Card;
+import com.cardgames.poker.Classification;
+import com.cardgames.poker.Hand;
+import com.cardgames.cards.Rank;
 
 import java.util.Comparator;
 import java.util.Iterator;

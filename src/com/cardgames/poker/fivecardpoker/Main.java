@@ -1,7 +1,7 @@
-package com.cardgames.fivecardpoker;
+package com.cardgames.poker.fivecardpoker;
 
-import com.cardgames.Classification;
-import com.cardgames.Deck;
+import com.cardgames.poker.Classification;
+import com.cardgames.cards.Deck;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;

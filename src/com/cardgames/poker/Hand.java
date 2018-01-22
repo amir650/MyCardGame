@@ -1,4 +1,7 @@
-package com.cardgames;
+package com.cardgames.poker;
+
+import com.cardgames.cards.Card;
+import com.cardgames.cards.Rank;
 
 import java.util.Iterator;
 import java.util.List;

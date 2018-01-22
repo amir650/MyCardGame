@@ -1,8 +1,8 @@
-import com.cardgames.Card;
-import com.cardgames.Classification;
-import com.cardgames.Rank;
-import com.cardgames.Suit;
-import com.cardgames.fivecardpoker.FiveCardPokerHand;
+import com.cardgames.cards.Card;
+import com.cardgames.poker.Classification;
+import com.cardgames.cards.Rank;
+import com.cardgames.cards.Suit;
+import com.cardgames.poker.fivecardpoker.FiveCardPokerHand;
 import org.junit.Test;
 
 import java.util.Optional;

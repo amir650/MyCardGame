@@ -1,26 +1,31 @@
-package com.cardgames.fivecardpoker;
+package com.cardgames.poker.holdem;
 
-import com.cardgames.Card;
-import com.cardgames.HandAnalyzer;
-import com.cardgames.Rank;
-import com.cardgames.Suit;
+import com.cardgames.cards.Card;
+import com.cardgames.poker.HandAnalyzer;
+import com.cardgames.cards.Rank;
+import com.cardgames.cards.Suit;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class FiveCardHandAnalyzer implements HandAnalyzer {
+public class HoldemHandAnalyzer implements HandAnalyzer {
 
-    private final SortedSet<Card> cards;
+    private final SortedSet<Card> holeCards;
+    private final SortedSet<Card> communityCards;
+    private final SortedSet<Card> combinedCards;
     private final Map<Rank, List<Card>> rankGroup;
     private final Map<Suit, List<Card>> suitGroup;
     private final int quadCount;
     private final int setCount;
     private final int pairCount;
 
-    FiveCardHandAnalyzer(final SortedSet<Card> cards) {
-        this.cards = Collections.unmodifiableSortedSet(cards);
-        this.rankGroup = initRankGroup(cards);
-        this.suitGroup = initSuitGroup(cards);
+    HoldemHandAnalyzer(final SortedSet<Card> holeCards,
+                       final SortedSet<Card> communityCards) {
+        this.holeCards = Collections.unmodifiableSortedSet(holeCards);
+        this.communityCards = Collections.unmodifiableSortedSet(communityCards);
+        this.combinedCards = init(holeCards, communityCards);
+        this.rankGroup = initRankGroup(this.combinedCards);
+        this.suitGroup = initSuitGroup(this.combinedCards);
         this.quadCount = groupCount(4);
         this.setCount = groupCount(3);
         this.pairCount = groupCount(2);
@@ -34,8 +39,17 @@ public class FiveCardHandAnalyzer implements HandAnalyzer {
         return this.suitGroup;
     }
 
+    @Override
     public SortedSet<Card> getCards() {
-        return this.cards;
+        return this.combinedCards;
+    }
+
+    SortedSet<Card> getHoleCards() {
+        return this.holeCards;
+    }
+
+    SortedSet<Card> getCommunityCards() {
+        return this.communityCards;
     }
 
     int getQuadCount() {
@@ -48,6 +62,14 @@ public class FiveCardHandAnalyzer implements HandAnalyzer {
 
     int getPairCount() {
         return this.pairCount;
+    }
+
+    private static SortedSet<Card> init(final SortedSet<Card> holeCards,
+                                        final SortedSet<Card> communityCards) {
+        final SortedSet<Card> combinedCards = new TreeSet<>();
+        combinedCards.addAll(holeCards);
+        combinedCards.addAll(communityCards);
+        return Collections.unmodifiableSortedSet(combinedCards);
     }
 
     private static Map<Rank, List<Card>> initRankGroup(final SortedSet<Card> cards) {
