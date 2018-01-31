@@ -1,10 +1,9 @@
 package com.cardgames.poker.fivecardpoker;
 
 import com.cardgames.cards.Card;
-import com.cardgames.poker.Hand;
 import com.cardgames.cards.Rank;
 import com.cardgames.poker.Classification;
-import com.cardgames.poker.HandClassifier;
+import com.cardgames.poker.Hand;
 
 import java.util.*;
 
@@ -30,11 +29,6 @@ public class FiveCardPokerHand implements Hand {
 
     public FiveCardHandAnalyzer getHandAnalyzer() {
         return this.handAnalyzer;
-    }
-
-    @Override
-    public HandClassifier getClassifier() {
-        return this.handClassifier;
     }
 
     public Iterator<Map.Entry<Rank, List<Card>>> getHandRankIterator() {

@@ -1,6 +1,6 @@
 package com.cardgames.poker.fivecardpoker;
 
-import com.cardgames.poker.Classification;
+import com.cardgames.poker.ClassificationRank;
 import com.cardgames.cards.Deck;
 
 import java.util.Arrays;
@@ -17,7 +17,7 @@ public class Main {
 
     private static void runExp1() {
         final long startTime = System.currentTimeMillis();
-        final int[] frequencyTable = new int[Classification.values().length];
+        final int[] frequencyTable = new int[ClassificationRank.values().length];
 
         IntStream.range(0, NUM_EXPERIMENTS).mapToObj(i -> new FiveCardPokerHand.Builder()).forEach(builder -> {
             final Deck deck = Deck.newShuffledSingleDeck();
@@ -27,8 +27,8 @@ public class Main {
             builder.addCard(deck.deal());
             builder.addCard(deck.deal());
             final FiveCardPokerHand hand = builder.build();
-            final Classification classification = hand.getClassification();
-            frequencyTable[classification.ordinal()]++;
+            final ClassificationRank classificationRank = hand.getClassification().getClassificationRank();
+            frequencyTable[classificationRank.ordinal()]++;
         });
 
         System.out.println("Finished experiment with " + NUM_EXPERIMENTS + " iterations in " + (System.currentTimeMillis() - startTime) + " milliseconds");

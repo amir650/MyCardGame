@@ -13,8 +13,6 @@ public interface Hand {
 
     HandAnalyzer getHandAnalyzer();
 
-    HandClassifier getClassifier();
-
     Iterator<Map.Entry<Rank, List<Card>>> getHandRankIterator();
 
 }

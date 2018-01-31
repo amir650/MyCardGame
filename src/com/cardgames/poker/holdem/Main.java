@@ -1,6 +1,6 @@
 package com.cardgames.poker.holdem;
 
-import com.cardgames.poker.Classification;
+import com.cardgames.poker.ClassificationRank;
 import com.cardgames.cards.Deck;
 import com.cardgames.poker.fivecardpoker.FiveCardPokerHand;
 
@@ -9,12 +9,12 @@ import java.util.stream.IntStream;
 
 public class Main {
 
-    private static final int NUM_EXPERIMENTS = 100000;
+    private static final int NUM_EXPERIMENTS = 1000000;
 
     public static void main(String[] args) {
 
         final long startTime = System.currentTimeMillis();
-        final int[] frequencyTable = new int[Classification.values().length];
+        final int[] frequencyTable = new int[ClassificationRank.values().length];
 
         IntStream.range(0, NUM_EXPERIMENTS).mapToObj(i -> new FiveCardPokerHand.Builder()).forEach(builder -> {
             final Deck deck = Deck.newShuffledSingleDeck();
@@ -28,9 +28,9 @@ public class Main {
                     .addCommunityCard(deck.deal())
                     .build();
 
-            final Classification classification = hand.getClassification();
-            frequencyTable[classification.ordinal()]++;
-            if(classification == Classification.STRAIGHT_FLUSH) {
+            final ClassificationRank classificationRank = hand.getClassification().getClassificationRank();
+            frequencyTable[classificationRank.ordinal()]++;
+            if(classificationRank == ClassificationRank.STRAIGHT_FLUSH) {
                 System.out.println(hand);
             }
         });

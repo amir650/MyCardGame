@@ -1,9 +1,9 @@
 package com.cardgames.poker.holdem;
 
 import com.cardgames.cards.Card;
-import com.cardgames.poker.Hand;
 import com.cardgames.cards.Rank;
 import com.cardgames.poker.Classification;
+import com.cardgames.poker.Hand;
 import com.cardgames.poker.HandClassifier;
 
 import java.util.*;
@@ -34,11 +34,6 @@ public class HoldemHand implements Hand {
     @Override
     public HoldemHandAnalyzer getHandAnalyzer() {
         return this.handAnalyzer;
-    }
-
-    @Override
-    public HandClassifier getClassifier() {
-        return this.handClassifier;
     }
 
     @Override

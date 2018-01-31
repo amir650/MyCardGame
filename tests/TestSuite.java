@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({TestDeck.class,
                      TestFiveCardHandComparison.class,
                      TestHoldemHandComparison.class,
-                     TestFiveCardHandIdentification.class
+                     TestFiveCardHandIdentification.class,
+                     TestHoldemHandIdentification.class
                      })
 public class TestSuite {
 }

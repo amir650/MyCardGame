@@ -1,28 +1,25 @@
 package com.cardgames.poker;
 
-public enum Classification {
+import com.cardgames.cards.Card;
 
-    HIGH_CARD(1),
-    PAIR(2),
-    TWO_PAIR(3),
-    SET(4),
-    WHEEL(5),
-    STRAIGHT(6),
-    FLUSH(7),
-    FULL_HOUSE(8),
-    FOUR_OF_A_KIND(9),
-    STRAIGHT_FLUSH_WHEEL(10),
-    STRAIGHT_FLUSH(11),
-    ROYAL_FLUSH(12);
+import java.util.SortedSet;
 
-    private final int value;
+public class Classification {
 
-    Classification(int value) {
-        this.value = value;
+    private final ClassificationRank classificationRank;
+    private final SortedSet<Card> cards;
+
+    Classification(final ClassificationRank classificationRank,
+                          final SortedSet<Card> cards) {
+        this.classificationRank = classificationRank;
+        this.cards = cards;
     }
 
-    public int getValue() {
-        return this.value;
+    public SortedSet<Card> getCards() {
+        return this.cards;
     }
 
+    public ClassificationRank getClassificationRank() {
+        return this.classificationRank;
+    }
 }
