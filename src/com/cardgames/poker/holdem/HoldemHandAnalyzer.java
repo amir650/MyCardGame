@@ -3,6 +3,7 @@ package com.cardgames.poker.holdem;
 import com.cardgames.cards.Card;
 import com.cardgames.cards.Rank;
 import com.cardgames.cards.Suit;
+import com.cardgames.poker.Classification;
 import com.cardgames.poker.HandAnalyzer;
 import com.cardgames.poker.PokerHandUtils;
 
@@ -13,6 +14,7 @@ public class HoldemHandAnalyzer implements HandAnalyzer {
     private final SortedSet<Card> holeCards;
     private final SortedSet<Card> communityCards;
     private final SortedSet<Card> combinedCards;
+    private final Classification handClassification;
     private final Map<Rank, List<Card>> rankGroup;
     private final Map<Suit, List<Card>> suitGroup;
     private final int quadCount;
@@ -29,6 +31,12 @@ public class HoldemHandAnalyzer implements HandAnalyzer {
         this.quadCount = groupCount(4);
         this.setCount = groupCount(3);
         this.pairCount = groupCount(2);
+        this.handClassification = PokerHandUtils.classifyPokerHand(this);
+    }
+
+    @Override
+    public Classification getClassification() {
+        return this.handClassification;
     }
 
     @Override
@@ -39,6 +47,11 @@ public class HoldemHandAnalyzer implements HandAnalyzer {
     @Override
     public Map<Suit, List<Card>> getSuitGroup() {
         return this.suitGroup;
+    }
+
+    @Override
+    public Iterator<Map.Entry<Rank, List<Card>>> getHandRankIterator() {
+        return this.rankGroup.entrySet().iterator();
     }
 
     @Override

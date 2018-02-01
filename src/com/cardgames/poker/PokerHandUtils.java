@@ -83,7 +83,7 @@ public enum PokerHandUtils {
 
     public static void checkHandClassification(final Hand hand,
                                                final ClassificationRank classificationRank) {
-        if(hand.getClassification().getClassificationRank() != classificationRank) {
+        if(hand.getHandAnalyzer().getClassification().getClassificationRank() != classificationRank) {
             throw new RuntimeException("Hand : " +hand+ " does not match expected classificationRank " + classificationRank);
         }
     }
@@ -110,5 +110,10 @@ public enum PokerHandUtils {
         }
 
         return sortedResults;
+    }
+
+    public static Classification classifyPokerHand(final HandAnalyzer handAnalyzer) {
+        final PokerHandDetector handDetector = new PokerHandDetector(handAnalyzer);
+        return handDetector.classifyHand();
     }
 }

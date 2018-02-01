@@ -17,14 +17,15 @@ public class HoldemHandComparator implements Comparator<HoldemHand> {
                        final HoldemHand otherHand) {
 
         final int classificationComparison =
-                Integer.compare(hand.getClassification().getClassificationRank().getValue(), otherHand.getClassification().getClassificationRank().getValue());
+                Integer.compare(hand.getHandAnalyzer().getClassification().getClassificationRank().getValue(),
+                                otherHand.getHandAnalyzer().getClassification().getClassificationRank().getValue());
 
         if(classificationComparison != 0) {
             return classificationComparison;
         }
 
         final int tieBreaker;
-        switch (hand.getClassification().getClassificationRank()) {
+        switch (hand.getHandAnalyzer().getClassification().getClassificationRank()) {
             case ROYAL_FLUSH:
                 tieBreaker = compareRoyalFlushHands(hand, otherHand);
                 break;
@@ -98,8 +99,8 @@ public class HoldemHandComparator implements Comparator<HoldemHand> {
         checkHandClassification(hand, ClassificationRank.FOUR_OF_A_KIND);
         checkHandClassification(otherHand, ClassificationRank.FOUR_OF_A_KIND);
 
-        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
-        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandAnalyzer().getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandAnalyzer().getHandRankIterator();
 
         final int quadsCompare = Integer.compare(handIterator.next().getKey().getRankValue(),
                 otherHandIterator.next().getKey().getRankValue());
@@ -116,8 +117,8 @@ public class HoldemHandComparator implements Comparator<HoldemHand> {
         checkHandClassification(hand, ClassificationRank.FULL_HOUSE);
         checkHandClassification(otherHand, ClassificationRank.FULL_HOUSE);
 
-        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
-        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandAnalyzer().getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandAnalyzer().getHandRankIterator();
         final int setCompare = Integer.compare(handIterator.next().getKey().getRankValue(),
                 otherHandIterator.next().getKey().getRankValue());
         if (setCompare != 0) {
@@ -138,8 +139,8 @@ public class HoldemHandComparator implements Comparator<HoldemHand> {
         checkHandClassification(hand, ClassificationRank.FLUSH);
         checkHandClassification(otherHand, ClassificationRank.FLUSH);
 
-        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
-        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandAnalyzer().getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandAnalyzer().getHandRankIterator();
 
         return iterateAndCompareHighCard(handIterator, otherHandIterator);
     }
@@ -163,8 +164,8 @@ public class HoldemHandComparator implements Comparator<HoldemHand> {
         checkHandClassification(hand, ClassificationRank.SET);
         checkHandClassification(otherHand, ClassificationRank.SET);
 
-        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
-        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandAnalyzer().getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandAnalyzer().getHandRankIterator();
         final int setCompare = Integer.compare(handIterator.next().getKey().getRankValue(),
                 otherHandIterator.next().getKey().getRankValue());
 
@@ -180,8 +181,8 @@ public class HoldemHandComparator implements Comparator<HoldemHand> {
         checkHandClassification(hand, ClassificationRank.TWO_PAIR);
         checkHandClassification(otherHand, ClassificationRank.TWO_PAIR);
 
-        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
-        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandAnalyzer().getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandAnalyzer().getHandRankIterator();
         final int highPairComparison =
                 Integer.compare(handIterator.next().getKey().getRankValue(), otherHandIterator.next().getKey().getRankValue());
         if (highPairComparison != 0) {
@@ -203,8 +204,8 @@ public class HoldemHandComparator implements Comparator<HoldemHand> {
         checkHandClassification(hand, ClassificationRank.PAIR);
         checkHandClassification(otherHand, ClassificationRank.PAIR);
 
-        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
-        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandAnalyzer().getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandAnalyzer().getHandRankIterator();
         final int highPairComparison =
                 Integer.compare(handIterator.next().getKey().getRankValue(), otherHandIterator.next().getKey().getRankValue());
 
@@ -220,8 +221,8 @@ public class HoldemHandComparator implements Comparator<HoldemHand> {
         checkHandClassification(hand, ClassificationRank.HIGH_CARD);
         checkHandClassification(otherHand, ClassificationRank.HIGH_CARD);
 
-        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandRankIterator();
-        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandAnalyzer().getHandRankIterator();
+        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandAnalyzer().getHandRankIterator();
 
         return iterateAndCompareHighCard(handIterator, otherHandIterator);
     }
@@ -240,7 +241,7 @@ public class HoldemHandComparator implements Comparator<HoldemHand> {
 
     private static void checkHandClassification(final Hand hand,
                                                 final ClassificationRank classificationRank) {
-        if(hand.getClassification().getClassificationRank() != classificationRank) {
+        if(hand.getHandAnalyzer().getClassification().getClassificationRank() != classificationRank) {
             throw new RuntimeException("Hand : " +hand+ " does not match expected classificationRank " + classificationRank);
         }
     }

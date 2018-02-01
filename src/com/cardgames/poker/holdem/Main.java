@@ -13,6 +13,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        System.out.println("Running Experiments with Holdem poker...");
+
         final long startTime = System.currentTimeMillis();
         final int[] frequencyTable = new int[ClassificationRank.values().length];
 
@@ -28,7 +30,7 @@ public class Main {
                     .addCommunityCard(deck.deal())
                     .build();
 
-            final ClassificationRank classificationRank = hand.getClassification().getClassificationRank();
+            final ClassificationRank classificationRank = hand.getHandAnalyzer().getClassification().getClassificationRank();
             frequencyTable[classificationRank.ordinal()]++;
             if(classificationRank == ClassificationRank.STRAIGHT_FLUSH) {
                 System.out.println(hand);

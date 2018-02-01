@@ -1,49 +1,36 @@
 package com.cardgames.poker.holdem;
 
 import com.cardgames.cards.Card;
-import com.cardgames.cards.Rank;
-import com.cardgames.poker.Classification;
 import com.cardgames.poker.Hand;
-import com.cardgames.poker.HandClassifier;
+import com.cardgames.poker.HandAnalyzer;
 
-import java.util.*;
+import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
 public class HoldemHand implements Hand {
 
-    private final Classification handClassification;
-    private final HandClassifier handClassifier;
-    private final HoldemHandAnalyzer handAnalyzer;
+    private final HandAnalyzer handAnalyzer;
 
     private static final int NUM_HOLE_CARDS = 2;
     private static final int NUM_COMMUNITY_CARDS = 5;
 
     HoldemHand(final Builder builder) {
         this.handAnalyzer = new HoldemHandAnalyzer(builder.holeCards, builder.communityCards);
-        this.handClassifier = new HoldemHandClassifier(this.handAnalyzer);
-        this.handClassification = this.handClassifier.classifyHand();
     }
 
     @Override
-    public Classification getClassification() {
-        return this.handClassification;
-    }
-
-    @Override
-    public HoldemHandAnalyzer getHandAnalyzer() {
+    public HandAnalyzer getHandAnalyzer() {
         return this.handAnalyzer;
     }
 
     @Override
-    public Iterator<Map.Entry<Rank, List<Card>>> getHandRankIterator() {
-        return getHandAnalyzer().getRankGroup().entrySet().iterator();
-    }
-
-    @Override
     public String toString() {
-        return getClassification() + " : hole cards " +
+        return this.handAnalyzer.getClassification() + " : hole cards " +
                getHandAnalyzer().getHoleCards().toString() + " : community cards " +
                 "" +
                getHandAnalyzer().getCommunityCards().toString();

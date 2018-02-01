@@ -11,6 +11,7 @@ public class Main {
     private static final int NUM_EXPERIMENTS = 10000000;
 
     public static void main(String[] args) {
+        System.out.println("Running Experiments with 5 card poker...");
         runExp1();
         runExp2();
     }
@@ -27,7 +28,7 @@ public class Main {
             builder.addCard(deck.deal());
             builder.addCard(deck.deal());
             final FiveCardPokerHand hand = builder.build();
-            final ClassificationRank classificationRank = hand.getClassification().getClassificationRank();
+            final ClassificationRank classificationRank = hand.getHandAnalyzer().getClassification().getClassificationRank();
             frequencyTable[classificationRank.ordinal()]++;
         });
 
@@ -60,11 +61,11 @@ public class Main {
 
             final int comparison = comparator.compare(hand, hand2);
 
-            if(comparison == -1) {
+            if(comparison < 0) {
                 frequencyTable[0]++;
             } else if(comparison == 0) {
                 frequencyTable[1]++;
-            } else if(comparison == 1) {
+            } else if(comparison > 0) {
                 frequencyTable[2]++;
             } else {
                 throw new RuntimeException("WTF");

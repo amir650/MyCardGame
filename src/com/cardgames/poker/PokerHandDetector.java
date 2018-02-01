@@ -1,6 +1,5 @@
 package com.cardgames.poker;
 
-import com.cardgames.HandDetector;
 import com.cardgames.cards.Card;
 import com.cardgames.cards.Rank;
 import com.cardgames.cards.Suit;
@@ -8,11 +7,11 @@ import com.cardgames.cards.Suit;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PokerHandDetector implements HandDetector {
+public class PokerHandDetector implements HandClassifier {
 
     private final HandAnalyzer handAnalyzer;
 
-    public PokerHandDetector(final HandAnalyzer handAnalyzer) {
+    PokerHandDetector(final HandAnalyzer handAnalyzer) {
         this.handAnalyzer = handAnalyzer;
     }
 
@@ -60,24 +59,24 @@ public class PokerHandDetector implements HandDetector {
     private Classification detectNormalStraight() {
         final List<Rank> cardRanks = this.handAnalyzer.getCards().stream().map(Card::getRank).collect(Collectors.toList());
 
-        if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_TWO_TO_SIX)) {
-            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_TWO_TO_SIX));
-        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_THREE_TO_SEVEN)) {
-            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_THREE_TO_SEVEN));
-        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_FOUR_TO_EIGHT)) {
-            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_FOUR_TO_EIGHT));
-        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_FIVE_TO_NINE)) {
-            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_FIVE_TO_NINE));
-        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_SIX_TO_TEN)) {
-            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_SIX_TO_TEN));
-        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_SEVEN_TO_JACK)) {
-            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_SEVEN_TO_JACK));
+        if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_TEN_TO_ACE)) {
+            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_TEN_TO_ACE));
+        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_NINE_TO_KING)) {
+            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_NINE_TO_KING));
         } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_EIGHT_TO_QUEEN)) {
             return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_EIGHT_TO_QUEEN));
-        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_NINE_TO_KING)) {
+        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_SEVEN_TO_JACK)) {
+            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_SEVEN_TO_JACK));
+        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_SIX_TO_TEN)) {
+            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_SIX_TO_TEN));
+        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_FIVE_TO_NINE)) {
+            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_FIVE_TO_NINE));
+        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_FOUR_TO_EIGHT)) {
+            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_FOUR_TO_EIGHT));
+        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_THREE_TO_SEVEN)) {
+            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_THREE_TO_SEVEN));
+        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_TWO_TO_SIX)) {
             return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_TWO_TO_SIX));
-        } else if(cardRanks.containsAll(PokerHandUtils.STRAIGHT_TEN_TO_ACE)) {
-            return new Classification(ClassificationRank.STRAIGHT, buildIt(PokerHandUtils.STRAIGHT_TEN_TO_ACE));
         }
 
         return isSet();
@@ -172,7 +171,7 @@ public class PokerHandDetector implements HandDetector {
     }
 
     @Override
-    public Classification detect() {
+    public Classification classifyHand() {
         return detectImpl();
     }
 }

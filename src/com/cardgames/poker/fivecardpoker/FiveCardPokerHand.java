@@ -2,32 +2,22 @@ package com.cardgames.poker.fivecardpoker;
 
 import com.cardgames.cards.Card;
 import com.cardgames.cards.Rank;
-import com.cardgames.poker.Classification;
-import com.cardgames.poker.Hand;
+import com.cardgames.poker.*;
 
 import java.util.*;
 
 
 public class FiveCardPokerHand implements Hand {
 
-    private final FiveCardHandAnalyzer handAnalyzer;
-    private final FiveCardHandClassifier handClassifier;
-    private final Classification handClassification;
+    private final HandAnalyzer handAnalyzer;
 
     private static final int POKER_HAND_SIZE = 5;
 
     FiveCardPokerHand(final Builder builder) {
         this.handAnalyzer = new FiveCardHandAnalyzer(builder.cards);
-        this.handClassifier = new FiveCardHandClassifier(this.handAnalyzer);
-        this.handClassification = this.handClassifier.classifyHand();
     }
 
-    @Override
-    public Classification getClassification() {
-        return this.handClassification;
-    }
-
-    public FiveCardHandAnalyzer getHandAnalyzer() {
+    public HandAnalyzer getHandAnalyzer() {
         return this.handAnalyzer;
     }
 

@@ -10,7 +10,7 @@ public class Classification {
     private final SortedSet<Card> cards;
 
     Classification(final ClassificationRank classificationRank,
-                          final SortedSet<Card> cards) {
+                   final SortedSet<Card> cards) {
         this.classificationRank = classificationRank;
         this.cards = cards;
     }

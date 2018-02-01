@@ -31,7 +31,7 @@ public class TestHoldemHandIdentification {
 
         final HoldemHand hand = builder.build();
 
-        assertEquals(hand.getClassification(), ClassificationRank.STRAIGHT);
+        assertEquals(hand.getHandAnalyzer().getClassification().getClassificationRank(), ClassificationRank.STRAIGHT);
     }
 
 }

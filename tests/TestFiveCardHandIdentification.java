@@ -24,7 +24,7 @@ public class TestFiveCardHandIdentification {
 
         final FiveCardPokerHand hand = builder.build();
 
-        assertEquals(hand.getClassification().getClassificationRank(), ClassificationRank.PAIR);
+        assertEquals(hand.getHandAnalyzer().getClassification().getClassificationRank(), ClassificationRank.PAIR);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class TestFiveCardHandIdentification {
 
         final FiveCardPokerHand hand = builder.build();
 
-        assertEquals(hand.getClassification().getClassificationRank(), ClassificationRank.TWO_PAIR);
+        assertEquals(hand.getHandAnalyzer().getClassification().getClassificationRank(), ClassificationRank.TWO_PAIR);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class TestFiveCardHandIdentification {
 
         final FiveCardPokerHand hand = builder.build();
 
-        assertEquals(hand.getClassification().getClassificationRank(), ClassificationRank.SET);
+        assertEquals(hand.getHandAnalyzer().getClassification().getClassificationRank(), ClassificationRank.SET);
     }
 
     @Test
@@ -72,7 +72,7 @@ public class TestFiveCardHandIdentification {
 
         final FiveCardPokerHand hand = builder.build();
 
-        assertEquals(hand.getClassification().getClassificationRank(), ClassificationRank.STRAIGHT);
+        assertEquals(hand.getHandAnalyzer().getClassification().getClassificationRank(), ClassificationRank.STRAIGHT);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class TestFiveCardHandIdentification {
 
         final FiveCardPokerHand hand = builder.build();
 
-        assertEquals(hand.getClassification().getClassificationRank(), ClassificationRank.WHEEL);
+        assertEquals(hand.getHandAnalyzer().getClassification().getClassificationRank(), ClassificationRank.WHEEL);
     }
 
     @Test
@@ -104,7 +104,7 @@ public class TestFiveCardHandIdentification {
 
         final FiveCardPokerHand hand = builder.build();
 
-        assertEquals(hand.getClassification().getClassificationRank(), ClassificationRank.FLUSH);
+        assertEquals(hand.getHandAnalyzer().getClassification().getClassificationRank(), ClassificationRank.FLUSH);
     }
 
     @Test
@@ -120,7 +120,7 @@ public class TestFiveCardHandIdentification {
 
         final FiveCardPokerHand hand = builder.build();
 
-        assertEquals(hand.getClassification().getClassificationRank(), ClassificationRank.FULL_HOUSE);
+        assertEquals(hand.getHandAnalyzer().getClassification().getClassificationRank(), ClassificationRank.FULL_HOUSE);
     }
 
     @Test
@@ -136,7 +136,7 @@ public class TestFiveCardHandIdentification {
 
         final FiveCardPokerHand hand = builder.build();
 
-        assertEquals(hand.getClassification().getClassificationRank(), ClassificationRank.FOUR_OF_A_KIND);
+        assertEquals(hand.getHandAnalyzer().getClassification().getClassificationRank(), ClassificationRank.FOUR_OF_A_KIND);
     }
 
     @Test
@@ -152,7 +152,7 @@ public class TestFiveCardHandIdentification {
 
         final FiveCardPokerHand hand = builder.build();
 
-        assertEquals(hand.getClassification().getClassificationRank(), ClassificationRank.STRAIGHT_FLUSH);
+        assertEquals(hand.getHandAnalyzer().getClassification().getClassificationRank(), ClassificationRank.STRAIGHT_FLUSH);
     }
 
     @Test
@@ -168,7 +168,7 @@ public class TestFiveCardHandIdentification {
 
         final FiveCardPokerHand hand = builder.build();
 
-        assertEquals(hand.getClassification().getClassificationRank(), ClassificationRank.ROYAL_FLUSH);
+        assertEquals(hand.getHandAnalyzer().getClassification().getClassificationRank(), ClassificationRank.ROYAL_FLUSH);
     }
     
 }
