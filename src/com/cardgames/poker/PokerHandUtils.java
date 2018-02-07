@@ -4,8 +4,9 @@ import com.cardgames.cards.Card;
 import com.cardgames.cards.Rank;
 import com.cardgames.cards.Suit;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.List;
+import java.util.SortedSet;
 
 import static com.cardgames.cards.Rank.*;
 
@@ -88,32 +89,10 @@ public enum PokerHandUtils {
         }
     }
 
-    public static Map<Suit, List<Card>> initSuitGroup(final SortedSet<Card> cards) {
-        return new TreeMap<>(cards.stream().collect(Collectors.groupingBy(Card::getSuit)));
-    }
-
-    public static Map<Rank, List<Card>> initRankGroup(final SortedSet<Card> cards) {
-
-        final Comparator<Map.Entry<Rank, List<Card>>> valueComparator =
-                (o1, o2) -> o2.getValue().size() == o1.getValue().size() ? o2.getKey().getRankValue() - o1.getKey().getRankValue() :
-                        o2.getValue().size() - o1.getValue().size();
-
-        final List<Map.Entry<Rank, List<Card>>> listOfEntries =
-                new ArrayList<>(cards.stream().collect(Collectors.groupingBy(Card::getRank)).entrySet());
-
-        listOfEntries.sort(valueComparator);
-
-        final LinkedHashMap<Rank, List<Card>> sortedResults = new LinkedHashMap<>();
-
-        for (final Map.Entry<Rank, List<Card>> entry : listOfEntries) {
-            sortedResults.put(entry.getKey(), entry.getValue());
-        }
-
-        return sortedResults;
-    }
-
-    public static Classification classifyPokerHand(final HandAnalyzer handAnalyzer) {
-        final PokerHandDetector handDetector = new PokerHandDetector(handAnalyzer);
+    public static Classification classifyPokerHand(final RankGroup rankGroup,
+                                                   final SuitGroup suitGroup,
+                                                   final SortedSet<Card> cards) {
+        final PokerHandDetector handDetector = new PokerHandDetector(rankGroup, suitGroup, cards);
         return handDetector.classifyHand();
     }
 }

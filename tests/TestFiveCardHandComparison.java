@@ -1,7 +1,7 @@
 import com.cardgames.cards.Card;
 import com.cardgames.cards.Rank;
 import com.cardgames.cards.Suit;
-import com.cardgames.poker.fivecardpoker.FiveCardHandComparator;
+import com.cardgames.poker.FiveCardHandComparator;
 import com.cardgames.poker.fivecardpoker.FiveCardPokerHand;
 import org.junit.Test;
 

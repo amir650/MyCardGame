@@ -2,7 +2,6 @@ package com.cardgames.poker.holdem;
 
 import com.cardgames.cards.Card;
 import com.cardgames.poker.Hand;
-import com.cardgames.poker.HandAnalyzer;
 
 import java.util.Optional;
 import java.util.Set;
@@ -14,17 +13,17 @@ import java.util.stream.Stream;
 
 public class HoldemHand implements Hand {
 
-    private final HandAnalyzer handAnalyzer;
+    private final HoldemHandAnalyzer handAnalyzer;
 
     private static final int NUM_HOLE_CARDS = 2;
     private static final int NUM_COMMUNITY_CARDS = 5;
 
     HoldemHand(final Builder builder) {
-        this.handAnalyzer = new HoldemHandAnalyzer(builder.holeCards, builder.communityCards);
+        this.handAnalyzer = new com.cardgames.poker.holdem.HoldemHandAnalyzer(builder.holeCards, builder.communityCards);
     }
 
     @Override
-    public HandAnalyzer getHandAnalyzer() {
+    public HoldemHandAnalyzer getHandAnalyzer() {
         return this.handAnalyzer;
     }
 

@@ -34,4 +34,26 @@ public class TestHoldemHandIdentification {
         assertEquals(hand.getHandAnalyzer().getClassification().getClassificationRank(), ClassificationRank.STRAIGHT);
     }
 
+    @Test
+    public void testFullHouse() {
+
+        final HoldemHand.Builder builder = new HoldemHand.Builder();
+
+        final Set<Optional<Card>> communityCards = new HashSet<>();
+        communityCards.add(Optional.of(new Card(Rank.THREE, Suit.DIAMONDS)));
+        communityCards.add(Optional.of(new Card(Rank.THREE, Suit.HEARTS)));
+        communityCards.add(Optional.of(new Card(Rank.THREE, Suit.CLUBS)));
+        communityCards.add(Optional.of(new Card(Rank.TEN, Suit.CLUBS)));
+        communityCards.add(Optional.of(new Card(Rank.QUEEN, Suit.HEARTS)));
+
+        builder.addHoleCard(Optional.of(new Card(Rank.TEN, Suit.SPADES)));
+        builder.addHoleCard(Optional.of(new Card(Rank.TEN, Suit.DIAMONDS)));
+        builder.addCommunityCards(communityCards);
+
+        final HoldemHand hand = builder.build();
+
+        assertEquals(hand.getHandAnalyzer().getClassification().getClassificationRank(), ClassificationRank.FULL_HOUSE);
+    }
+
+
 }

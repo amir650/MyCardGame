@@ -1,13 +1,11 @@
 package com.cardgames.poker.holdem;
 
 import com.cardgames.cards.Card;
-import com.cardgames.cards.Rank;
-import com.cardgames.cards.Suit;
-import com.cardgames.poker.Classification;
-import com.cardgames.poker.HandAnalyzer;
-import com.cardgames.poker.PokerHandUtils;
+import com.cardgames.poker.*;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class HoldemHandAnalyzer implements HandAnalyzer {
 
@@ -15,23 +13,17 @@ public class HoldemHandAnalyzer implements HandAnalyzer {
     private final SortedSet<Card> communityCards;
     private final SortedSet<Card> combinedCards;
     private final Classification handClassification;
-    private final Map<Rank, List<Card>> rankGroup;
-    private final Map<Suit, List<Card>> suitGroup;
-    private final int quadCount;
-    private final int setCount;
-    private final int pairCount;
+    private final RankGroup rankGroup;
+    private final SuitGroup suitGroup;
 
     HoldemHandAnalyzer(final SortedSet<Card> holeCards,
                        final SortedSet<Card> communityCards) {
         this.holeCards = Collections.unmodifiableSortedSet(holeCards);
         this.communityCards = Collections.unmodifiableSortedSet(communityCards);
         this.combinedCards = init(holeCards, communityCards);
-        this.rankGroup = PokerHandUtils.initRankGroup(this.combinedCards);
-        this.suitGroup = PokerHandUtils.initSuitGroup(this.combinedCards);
-        this.quadCount = groupCount(4);
-        this.setCount = groupCount(3);
-        this.pairCount = groupCount(2);
-        this.handClassification = PokerHandUtils.classifyPokerHand(this);
+        this.rankGroup = new RankGroup(this.combinedCards);
+        this.suitGroup = new SuitGroup(this.combinedCards);
+        this.handClassification = PokerHandUtils.classifyPokerHand(this.rankGroup, this.suitGroup, this.combinedCards);
     }
 
     @Override
@@ -40,18 +32,13 @@ public class HoldemHandAnalyzer implements HandAnalyzer {
     }
 
     @Override
-    public Map<Rank, List<Card>> getRankGroup() {
+    public RankGroup getRankGroup() {
         return this.rankGroup;
     }
 
     @Override
-    public Map<Suit, List<Card>> getSuitGroup() {
+    public SuitGroup getSuitGroup() {
         return this.suitGroup;
-    }
-
-    @Override
-    public Iterator<Map.Entry<Rank, List<Card>>> getHandRankIterator() {
-        return this.rankGroup.entrySet().iterator();
     }
 
     @Override
@@ -59,27 +46,10 @@ public class HoldemHandAnalyzer implements HandAnalyzer {
         return this.combinedCards;
     }
 
-    @Override
-    public int getQuadCount() {
-        return this.quadCount;
-    }
-
-    @Override
-    public int getSetCount() {
-        return this.setCount;
-    }
-
-    @Override
-    public int getPairCount() {
-        return this.pairCount;
-    }
-
-    @Override
     public SortedSet<Card> getHoleCards() {
         return this.holeCards;
     }
 
-    @Override
     public SortedSet<Card> getCommunityCards() {
         return this.communityCards;
     }

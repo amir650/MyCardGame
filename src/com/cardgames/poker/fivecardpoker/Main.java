@@ -2,6 +2,7 @@ package com.cardgames.poker.fivecardpoker;
 
 import com.cardgames.poker.ClassificationRank;
 import com.cardgames.cards.Deck;
+import com.cardgames.poker.FiveCardHandComparator;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
