@@ -150,27 +150,13 @@ public class PokerHandDetector implements HandClassifier {
         return detectFlush();
     }
 
-    private Card extractQuadKicker(final Iterator<Map.Entry<Rank, List<Card>>> rankGroup) {
+    private static Card extractQuadKicker(final Iterator<Map.Entry<Rank, List<Card>>> rankGroup) {
         if (!rankGroup.hasNext()) {
             throw new RuntimeException("No kicker to extract!");
         }
-        final Map.Entry<Rank, List<Card>> entry = rankGroup.next();
-        final Card kicker;
-        switch (entry.getValue().size()) {
-            case 3:
-                kicker = entry.getValue().iterator().next();
-                break;
-            case 2:
-                entry.getValue().iterator().next();
-                kicker = entry.getValue().iterator().next();
-                break;
-            case 1:
-                kicker = entry.getValue().iterator().next();
-                break;
-            default:
-                throw new RuntimeException("Should not reach here!");
-        }
-        return kicker;
+        final SortedSet<Card> remainingCards = new TreeSet<>();
+        rankGroup.forEachRemaining(rankListEntry -> remainingCards.addAll(rankListEntry.getValue()));
+        return remainingCards.last();
     }
 
     private Classification detectFourOfAKind() {
@@ -204,20 +190,16 @@ public class PokerHandDetector implements HandClassifier {
         final List<Card> handCards = new ArrayList<>(this.cards);
         if (handCards.containsAll(PokerHandUtils.STRAIGHT_WHEEL_SPADES)) {
             handCards.retainAll(PokerHandUtils.STRAIGHT_WHEEL_SPADES);
-            return new Classification(ClassificationRank.STRAIGHT_FLUSH_WHEEL,
-                    new TreeSet<>(handCards));
+            return new Classification(ClassificationRank.STRAIGHT_FLUSH_WHEEL, new TreeSet<>(handCards));
         } else if (handCards.containsAll(PokerHandUtils.STRAIGHT_WHEEL_HEARTS)) {
             handCards.retainAll(PokerHandUtils.STRAIGHT_WHEEL_HEARTS);
-            return new Classification(ClassificationRank.STRAIGHT_FLUSH_WHEEL,
-                    new TreeSet<>(handCards));
+            return new Classification(ClassificationRank.STRAIGHT_FLUSH_WHEEL, new TreeSet<>(handCards));
         } else if (handCards.containsAll(PokerHandUtils.STRAIGHT_WHEEL_CLUBS)) {
             handCards.retainAll(PokerHandUtils.STRAIGHT_WHEEL_CLUBS);
-            return new Classification(ClassificationRank.STRAIGHT_FLUSH_WHEEL,
-                    new TreeSet<>(handCards));
+            return new Classification(ClassificationRank.STRAIGHT_FLUSH_WHEEL, new TreeSet<>(handCards));
         } else if (handCards.containsAll(PokerHandUtils.STRAIGHT_WHEEL_DIAMONDS)) {
             handCards.retainAll(PokerHandUtils.STRAIGHT_WHEEL_DIAMONDS);
-            return new Classification(ClassificationRank.STRAIGHT_FLUSH_WHEEL,
-                    new TreeSet<>(handCards));
+            return new Classification(ClassificationRank.STRAIGHT_FLUSH_WHEEL, new TreeSet<>(handCards));
         }
         return detectStraightFlush();
     }
@@ -226,20 +208,16 @@ public class PokerHandDetector implements HandClassifier {
         final List<Card> handCards = new ArrayList<>(this.cards);
         if (handCards.containsAll(PokerHandUtils.ROYAL_FLUSH_SPADES)) {
             handCards.retainAll(PokerHandUtils.ROYAL_FLUSH_SPADES);
-            return new Classification(ClassificationRank.ROYAL_FLUSH,
-                    new TreeSet<>(handCards));
+            return new Classification(ClassificationRank.ROYAL_FLUSH, new TreeSet<>(handCards));
         } else if (handCards.containsAll(PokerHandUtils.ROYAL_FLUSH_HEARTS)) {
             handCards.retainAll(PokerHandUtils.ROYAL_FLUSH_HEARTS);
-            return new Classification(ClassificationRank.ROYAL_FLUSH,
-                    new TreeSet<>(handCards));
+            return new Classification(ClassificationRank.ROYAL_FLUSH, new TreeSet<>(handCards));
         } else if (handCards.containsAll(PokerHandUtils.ROYAL_FLUSH_CLUBS)) {
             handCards.retainAll(PokerHandUtils.ROYAL_FLUSH_CLUBS);
-            return new Classification(ClassificationRank.ROYAL_FLUSH,
-                    new TreeSet<>(handCards));
+            return new Classification(ClassificationRank.ROYAL_FLUSH, new TreeSet<>(handCards));
         } else if (handCards.containsAll(PokerHandUtils.ROYAL_FLUSH_DIAMONDS)) {
             handCards.retainAll(PokerHandUtils.ROYAL_FLUSH_DIAMONDS);
-            return new Classification(ClassificationRank.ROYAL_FLUSH,
-                    new TreeSet<>(handCards));
+            return new Classification(ClassificationRank.ROYAL_FLUSH, new TreeSet<>(handCards));
         }
 
         return detectSraightFlushWheel();
