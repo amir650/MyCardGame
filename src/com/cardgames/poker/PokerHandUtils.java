@@ -92,7 +92,7 @@ public enum PokerHandUtils {
     public static Classification classifyPokerHand(final RankGroup rankGroup,
                                                    final SuitGroup suitGroup,
                                                    final SortedSet<Card> cards) {
-        final PokerHandDetector handDetector = new PokerHandDetector(rankGroup, suitGroup, cards);
+        final PokerHandClassifier handDetector = new PokerHandClassifier(rankGroup, suitGroup, cards);
         return handDetector.classify();
     }
 }

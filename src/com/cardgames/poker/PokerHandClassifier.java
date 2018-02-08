@@ -7,15 +7,15 @@ import com.cardgames.cards.Suit;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PokerHandDetector implements HandClassifier {
+public class PokerHandClassifier implements HandClassifier {
 
     private final RankGroup rankGroup;
     private final SuitGroup suitGroup;
     private final SortedSet<Card> cards;
 
-    PokerHandDetector(final RankGroup rankGroup,
-                      final SuitGroup suitGroup,
-                      final SortedSet<Card> cards) {
+    PokerHandClassifier(final RankGroup rankGroup,
+                        final SuitGroup suitGroup,
+                        final SortedSet<Card> cards) {
         this.rankGroup = rankGroup;
         this.suitGroup = suitGroup;
         this.cards = Collections.unmodifiableSortedSet(cards);
@@ -84,7 +84,6 @@ public class PokerHandDetector implements HandClassifier {
         } else if (cardRanks.containsAll(PokerHandUtils.STRAIGHT_TWO_TO_SIX)) {
             return new Classification(ClassificationRank.STRAIGHT, calculateStraight(PokerHandUtils.STRAIGHT_TWO_TO_SIX));
         }
-
         return isSet();
     }
 
@@ -135,21 +134,25 @@ public class PokerHandDetector implements HandClassifier {
             final Iterator<Map.Entry<Rank, List<Card>>> handRankIterator = this.rankGroup.iterator();
             final SortedSet<Card> cards = new TreeSet<>();
             cards.addAll(handRankIterator.next().getValue());
-            final List<Card> pairOrSet = handRankIterator.next().getValue();
-            if (pairOrSet.size() == 3) {
-                final Iterator<Card> remainingCardsIterator = pairOrSet.iterator();
-                cards.add(remainingCardsIterator.next());
-                cards.add(remainingCardsIterator.next());
-                return new Classification(ClassificationRank.FULL_HOUSE, cards);
-            } else if (pairOrSet.size() == 2) {
-                cards.addAll(pairOrSet);
-                return new Classification(ClassificationRank.FULL_HOUSE, cards);
-            } else {
-                throw new RuntimeException("Should not reach here!");
-            }
-
+            cards.addAll(extractFullHousePair(handRankIterator));
+            return new Classification(ClassificationRank.FULL_HOUSE, cards);
         }
         return detectFlush();
+    }
+
+    private static Collection<Card> extractFullHousePair(final Iterator<Map.Entry<Rank, List<Card>>> handRankIterator) {
+        final List<Card> fullHousePair = new ArrayList<>();
+        final List<Card> pairOrSet = handRankIterator.next().getValue();
+        if (pairOrSet.size() == 3) {
+            final Iterator<Card> remainingCardsIterator = pairOrSet.iterator();
+            fullHousePair.add(remainingCardsIterator.next());
+            fullHousePair.add(remainingCardsIterator.next());
+        } else if (pairOrSet.size() == 2) {
+            fullHousePair.addAll(pairOrSet);
+        } else {
+            throw new RuntimeException("Should not reach here!");
+        }
+        return fullHousePair;
     }
 
     private static Card extractQuadKicker(final Iterator<Map.Entry<Rank, List<Card>>> rankGroup) {
@@ -221,7 +224,6 @@ public class PokerHandDetector implements HandClassifier {
             handCards.retainAll(PokerHandUtils.ROYAL_FLUSH_DIAMONDS);
             return new Classification(ClassificationRank.ROYAL_FLUSH, new TreeSet<>(handCards));
         }
-
         return detectSraightFlushWheel();
     }
 
