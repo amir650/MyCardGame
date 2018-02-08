@@ -121,7 +121,7 @@ public class PokerHandDetector implements HandClassifier {
 
     private Classification detectFlush() {
         final Map<Suit, List<Card>> suitGroup = this.suitGroup.getSuitMap();
-        for (Map.Entry<Suit, List<Card>> entry : suitGroup.entrySet()) {
+        for (final Map.Entry<Suit, List<Card>> entry : suitGroup.entrySet()) {
             if (entry.getValue().size() == 5) {
                 return new Classification(ClassificationRank.FLUSH, new TreeSet<>(entry.getValue()));
             }
@@ -130,22 +130,24 @@ public class PokerHandDetector implements HandClassifier {
     }
 
     private Classification detectFullHouse() {
-        final Iterator<Map.Entry<Rank, List<Card>>> handRankIterator = this.rankGroup.iterator();
-        final List<Card> first = handRankIterator.next().getValue();
-        if (first.size() == 3) {
-            final SortedSet<Card> daCards = new TreeSet<>();
-            final List<Card> second = handRankIterator.next().getValue();
-            if (second.size() == 3) {
-                final Iterator<Card> it = second.iterator();
-                daCards.addAll(first);
-                daCards.add(it.next());
-                daCards.add(it.next());
-                return new Classification(ClassificationRank.FULL_HOUSE, daCards);
-            } else if (second.size() == 2) {
-                daCards.addAll(first);
-                daCards.addAll(second);
-                return new Classification(ClassificationRank.FULL_HOUSE, daCards);
+        if (this.rankGroup.getSetCount() == 2 ||
+            (this.rankGroup.getSetCount() == 1 && this.rankGroup.getPairCount() >= 1)) {
+            final Iterator<Map.Entry<Rank, List<Card>>> handRankIterator = this.rankGroup.iterator();
+            final SortedSet<Card> cards = new TreeSet<>();
+            cards.addAll(handRankIterator.next().getValue());
+            final List<Card> pairOrSet = handRankIterator.next().getValue();
+            if (pairOrSet.size() == 3) {
+                final Iterator<Card> remainingCardsIterator = pairOrSet.iterator();
+                cards.add(remainingCardsIterator.next());
+                cards.add(remainingCardsIterator.next());
+                return new Classification(ClassificationRank.FULL_HOUSE, cards);
+            } else if (pairOrSet.size() == 2) {
+                cards.addAll(pairOrSet);
+                return new Classification(ClassificationRank.FULL_HOUSE, cards);
+            } else {
+                throw new RuntimeException("Should not reach here!");
             }
+
         }
         return detectFlush();
     }
@@ -172,7 +174,7 @@ public class PokerHandDetector implements HandClassifier {
 
     private Classification detectStraightFlush() {
         final Map<Suit, List<Card>> suitGroup = this.suitGroup.getSuitMap();
-        for (Map.Entry<Suit, List<Card>> entry : suitGroup.entrySet()) {
+        for (final Map.Entry<Suit, List<Card>> entry : suitGroup.entrySet()) {
             if (entry.getValue().size() == 5) {
                 final Card[] cardArray = entry.getValue().toArray(new Card[entry.getValue().size()]);
                 for (int i = 0; i < cardArray.length - 1; i++) {
@@ -227,12 +229,16 @@ public class PokerHandDetector implements HandClassifier {
         return detectRoyalFlush();
     }
 
-    @Override
-    public Classification classifyHand() {
-        final Classification result = detectImpl();
-        if (result.getCards().size() != 5) {
-            throw new RuntimeException("Invalid cards: " + this.cards);
+    private static void validateCards(final SortedSet<Card> cards) {
+        if (cards.size() != 5) {
+            throw new RuntimeException("Invalid cards: " + cards);
         }
+    }
+
+    @Override
+    public Classification classify() {
+        final Classification result = detectImpl();
+        validateCards(result.getCards());
         return result;
     }
 }

@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 public class Main {
 
-    private static final int NUM_EXPERIMENTS = 10000000;
+    private static final int NUM_EXPERIMENTS = 10000000 * 5;
 
     public static void main(String[] args) {
         System.out.println("Running Experiments with 5 card poker...");
@@ -44,12 +44,14 @@ public class Main {
 
         IntStream.range(0, NUM_EXPERIMENTS).forEach(i -> {
             final Deck deck = Deck.newShuffledSingleDeck();
+
             FiveCardPokerHand.Builder builder = new FiveCardPokerHand.Builder();
             builder.addCard(deck.deal());
             builder.addCard(deck.deal());
             builder.addCard(deck.deal());
             builder.addCard(deck.deal());
             builder.addCard(deck.deal());
+
             final FiveCardPokerHand hand = builder.build();
 
             FiveCardPokerHand.Builder builder2 = new FiveCardPokerHand.Builder();
@@ -58,6 +60,7 @@ public class Main {
             builder2.addCard(deck.deal());
             builder2.addCard(deck.deal());
             builder2.addCard(deck.deal());
+
             final FiveCardPokerHand hand2 = builder2.build();
 
             final int comparison = comparator.compare(hand, hand2);

@@ -61,7 +61,7 @@ public class FiveCardHandComparator implements Comparator<Hand> {
                 tiebreaker = compareHighCardHands(hand, otherHand);
                 break;
             default:
-                throw new RuntimeException("wtf");
+                throw new RuntimeException("Should not reach here!");
         }
 
         return tiebreaker;

@@ -32,9 +32,6 @@ public class Main {
 
             final ClassificationRank classificationRank = hand.getHandAnalyzer().getClassification().getClassificationRank();
             frequencyTable[classificationRank.ordinal()]++;
-            if(classificationRank == ClassificationRank.STRAIGHT_FLUSH) {
-                System.out.println(hand);
-            }
         });
 
         System.out.println("Finished experiment with " + NUM_EXPERIMENTS + " iterations in " + (System.currentTimeMillis() - startTime) + " milliseconds");

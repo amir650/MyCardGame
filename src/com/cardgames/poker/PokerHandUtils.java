@@ -93,6 +93,6 @@ public enum PokerHandUtils {
                                                    final SuitGroup suitGroup,
                                                    final SortedSet<Card> cards) {
         final PokerHandDetector handDetector = new PokerHandDetector(rankGroup, suitGroup, cards);
-        return handDetector.classifyHand();
+        return handDetector.classify();
     }
 }
