@@ -46,6 +46,10 @@ public class Deck {
         return this.deckCards.size();
     }
 
+    public boolean contains(final Card card) {
+        return this.deckCards.contains(card);
+    }
+
     public Optional<Card> deal() {
         return this.deckCards.empty() ? Optional.empty() :
                 Optional.of(this.deckCards.pop());
