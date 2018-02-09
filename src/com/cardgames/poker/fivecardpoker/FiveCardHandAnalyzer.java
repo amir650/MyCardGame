@@ -17,7 +17,7 @@ public class FiveCardHandAnalyzer implements HandAnalyzer {
         this.cards = Collections.unmodifiableSortedSet(cards);
         this.rankGroup = new RankGroup(this.cards);
         this.suitGroup = new SuitGroup(this.cards);
-        this.handClassification = PokerHandUtils.classifyPokerHand(this.rankGroup, this.suitGroup, this.cards);
+        this.handClassification = PokerHandUtils.classifyPokerHand(getRankGroup(), getSuitGroup(), getCards());
     }
 
     @Override

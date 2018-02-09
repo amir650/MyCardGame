@@ -23,7 +23,7 @@ public class HoldemHandAnalyzer implements HandAnalyzer {
         this.combinedCards = init(holeCards, communityCards);
         this.rankGroup = new RankGroup(this.combinedCards);
         this.suitGroup = new SuitGroup(this.combinedCards);
-        this.handClassification = PokerHandUtils.classifyPokerHand(this.rankGroup, this.suitGroup, this.combinedCards);
+        this.handClassification = PokerHandUtils.classifyPokerHand(getRankGroup(), getSuitGroup(), getCards());
     }
 
     @Override

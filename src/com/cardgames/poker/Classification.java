@@ -8,16 +8,16 @@ import java.util.SortedSet;
 public class Classification {
 
     private final ClassificationRank classificationRank;
-    private final SortedSet<Card> cards;
+    private final SortedSet<Card> classifiedCards;
 
     Classification(final ClassificationRank classificationRank,
                    final SortedSet<Card> cards) {
         this.classificationRank = classificationRank;
-        this.cards = Collections.unmodifiableSortedSet(cards);
+        this.classifiedCards = Collections.unmodifiableSortedSet(cards);
     }
 
-    public SortedSet<Card> getCards() {
-        return this.cards;
+    public SortedSet<Card> getClassifiedCards() {
+        return this.classifiedCards;
     }
 
     public ClassificationRank getClassificationRank() {
