@@ -1,7 +1,7 @@
 import com.cardgames.cards.Card;
 import com.cardgames.cards.Rank;
 import com.cardgames.cards.Suit;
-import com.cardgames.poker.PokerHandComparator;
+import com.cardgames.poker.shared.PokerHandComparator;
 import com.cardgames.poker.holdem.HoldemHand;
 import org.junit.Test;
 

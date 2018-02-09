@@ -3,7 +3,7 @@ package com.cardgames.poker.holdem;
 import com.cardgames.cards.Card;
 import com.cardgames.cards.Deck;
 import com.cardgames.cards.Rank;
-import com.cardgames.poker.ClassificationRank;
+import com.cardgames.poker.shared.ClassificationRank;
 import com.cardgames.poker.fivecardpoker.FiveCardPokerHand;
 
 import java.util.Arrays;

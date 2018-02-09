@@ -1,7 +1,7 @@
 package com.cardgames.poker.holdem;
 
 import com.cardgames.cards.Card;
-import com.cardgames.poker.*;
+import com.cardgames.poker.shared.*;
 
 import java.util.Collections;
 import java.util.SortedSet;

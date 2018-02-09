@@ -1,8 +1,8 @@
 package com.cardgames.poker.fivecardpoker;
 
-import com.cardgames.poker.ClassificationRank;
+import com.cardgames.poker.shared.ClassificationRank;
 import com.cardgames.cards.Deck;
-import com.cardgames.poker.PokerHandComparator;
+import com.cardgames.poker.shared.PokerHandComparator;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;

@@ -1,4 +1,4 @@
-package com.cardgames.poker;
+package com.cardgames.poker.shared;
 
 public interface Hand {
 

@@ -1,5 +1,5 @@
 import com.cardgames.cards.Card;
-import com.cardgames.poker.ClassificationRank;
+import com.cardgames.poker.shared.ClassificationRank;
 import com.cardgames.cards.Rank;
 import com.cardgames.cards.Suit;
 import com.cardgames.poker.fivecardpoker.FiveCardPokerHand;

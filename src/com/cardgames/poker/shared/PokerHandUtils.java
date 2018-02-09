@@ -1,4 +1,4 @@
-package com.cardgames.poker;
+package com.cardgames.poker.shared;
 
 import com.cardgames.cards.Card;
 import com.cardgames.cards.Rank;
