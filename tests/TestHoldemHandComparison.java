@@ -1,7 +1,7 @@
 import com.cardgames.cards.Card;
 import com.cardgames.cards.Rank;
 import com.cardgames.cards.Suit;
-import com.cardgames.poker.FiveCardHandComparator;
+import com.cardgames.poker.PokerHandComparator;
 import com.cardgames.poker.holdem.HoldemHand;
 import org.junit.Test;
 
@@ -36,7 +36,7 @@ public class TestHoldemHandComparison {
         final HoldemHand hand = builder.build();
         final HoldemHand otherHand = builder2.build();
 
-        final FiveCardHandComparator comparator = new FiveCardHandComparator();
+        final PokerHandComparator comparator = new PokerHandComparator();
 
         final int result = comparator.compare(hand, otherHand);
 

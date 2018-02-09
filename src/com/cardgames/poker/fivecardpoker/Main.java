@@ -2,7 +2,7 @@ package com.cardgames.poker.fivecardpoker;
 
 import com.cardgames.poker.ClassificationRank;
 import com.cardgames.cards.Deck;
-import com.cardgames.poker.FiveCardHandComparator;
+import com.cardgames.poker.PokerHandComparator;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -40,7 +40,7 @@ public class Main {
     private static void runExp2() {
         final long startTime = System.currentTimeMillis();
         final int[] frequencyTable = new int[3];
-        final FiveCardHandComparator comparator = new FiveCardHandComparator();
+        final PokerHandComparator comparator = new PokerHandComparator();
 
         IntStream.range(0, NUM_EXPERIMENTS).forEach(i -> {
             final Deck deck = Deck.newShuffledSingleDeck();

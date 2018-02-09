@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class FiveCardHandComparator implements Comparator<Hand> {
+public class PokerHandComparator implements Comparator<Hand> {
 
     @Override
     public int compare(final Hand hand,

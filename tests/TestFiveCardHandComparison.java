@@ -1,7 +1,7 @@
 import com.cardgames.cards.Card;
 import com.cardgames.cards.Rank;
 import com.cardgames.cards.Suit;
-import com.cardgames.poker.FiveCardHandComparator;
+import com.cardgames.poker.PokerHandComparator;
 import com.cardgames.poker.fivecardpoker.FiveCardPokerHand;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class TestFiveCardHandComparison {
         builder2.addCard(Optional.of(new Card(Rank.QUEEN, Suit.HEARTS)));
 
         final FiveCardPokerHand otherHand = builder2.build();
-        final FiveCardHandComparator comparator = new FiveCardHandComparator();
+        final PokerHandComparator comparator = new PokerHandComparator();
 
         final int result = comparator.compare(hand, otherHand);
 
@@ -60,7 +60,7 @@ public class TestFiveCardHandComparison {
         builder2.addCard(Optional.of(new Card(Rank.QUEEN, Suit.HEARTS)));
 
         final FiveCardPokerHand otherHand = builder2.build();
-        final FiveCardHandComparator comparator = new FiveCardHandComparator();
+        final PokerHandComparator comparator = new PokerHandComparator();
 
         final int result = comparator.compare(hand, otherHand);
 
@@ -88,7 +88,7 @@ public class TestFiveCardHandComparison {
         builder2.addCard(Optional.of(new Card(Rank.THREE, Suit.HEARTS)));
 
         final FiveCardPokerHand otherHand = builder2.build();
-        final FiveCardHandComparator comparator = new FiveCardHandComparator();
+        final PokerHandComparator comparator = new PokerHandComparator();
 
         final int result = comparator.compare(hand, otherHand);
 
@@ -117,7 +117,7 @@ public class TestFiveCardHandComparison {
         builder2.addCard(Optional.of(new Card(Rank.NINE, Suit.DIAMONDS)));
 
         final FiveCardPokerHand otherHand = builder2.build();
-        final FiveCardHandComparator comparator = new FiveCardHandComparator();
+        final PokerHandComparator comparator = new PokerHandComparator();
         final int result = comparator.compare(hand, otherHand);
 
         assertEquals(result, -1);
@@ -146,7 +146,7 @@ public class TestFiveCardHandComparison {
         builder2.addCard(Optional.of(new Card(Rank.NINE, Suit.HEARTS)));
 
         final FiveCardPokerHand otherHand = builder2.build();
-        final FiveCardHandComparator comparator = new FiveCardHandComparator();
+        final PokerHandComparator comparator = new PokerHandComparator();
         final int result = comparator.compare(hand, otherHand);
         assertEquals(result, -1);
     }
@@ -172,7 +172,7 @@ public class TestFiveCardHandComparison {
         builder2.addCard(Optional.of(new Card(Rank.KING, Suit.SPADES)));
 
         final FiveCardPokerHand otherHand = builder2.build();
-        final FiveCardHandComparator comparator = new FiveCardHandComparator();
+        final PokerHandComparator comparator = new PokerHandComparator();
         final int result = comparator.compare(hand, otherHand);
 
         assertEquals(result, -1);
