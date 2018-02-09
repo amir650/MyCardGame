@@ -134,10 +134,8 @@ public class PokerHandComparator implements Comparator<Hand> {
         PokerHandUtils.checkHandClassification(hand, ClassificationRank.FLUSH);
         PokerHandUtils.checkHandClassification(otherHand, ClassificationRank.FLUSH);
 
-        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandAnalyzer().getRankGroup().iterator();
-        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandAnalyzer().getRankGroup().iterator();
-
-        return iterateAndCompareHighCard(handIterator, otherHandIterator);
+        return iterateAndCompareHighCard(hand.getHandAnalyzer().getRankGroup().iterator(),
+                                         otherHand.getHandAnalyzer().getRankGroup().iterator());
     }
 
     private static int compareStraightHands(final Hand hand,
@@ -159,9 +157,8 @@ public class PokerHandComparator implements Comparator<Hand> {
         PokerHandUtils.checkHandClassification(hand, ClassificationRank.SET);
         PokerHandUtils.checkHandClassification(otherHand, ClassificationRank.SET);
 
-        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandAnalyzer().getRankGroup().iterator();
-        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandAnalyzer().getRankGroup().iterator();
-        final int setCompare = compareRanks(handIterator, otherHandIterator);
+        final int setCompare = compareRanks(hand.getHandAnalyzer().getRankGroup().iterator(),
+                                            otherHand.getHandAnalyzer().getRankGroup().iterator());
 
         if (setCompare != 0) {
             return setCompare;
@@ -213,10 +210,8 @@ public class PokerHandComparator implements Comparator<Hand> {
         PokerHandUtils.checkHandClassification(hand, ClassificationRank.HIGH_CARD);
         PokerHandUtils.checkHandClassification(otherHand, ClassificationRank.HIGH_CARD);
 
-        final Iterator<Map.Entry<Rank, List<Card>>> handIterator = hand.getHandAnalyzer().getRankGroup().iterator();
-        final Iterator<Map.Entry<Rank, List<Card>>> otherHandIterator = otherHand.getHandAnalyzer().getRankGroup().iterator();
-
-        return iterateAndCompareHighCard(handIterator, otherHandIterator);
+        return iterateAndCompareHighCard(hand.getHandAnalyzer().getRankGroup().iterator(),
+                                         otherHand.getHandAnalyzer().getRankGroup().iterator());
     }
 
     private static int iterateAndCompareHighCard(final Iterator<Map.Entry<Rank, List<Card>>> handIterator,
@@ -238,7 +233,7 @@ public class PokerHandComparator implements Comparator<Hand> {
 
     private static int compareHandClassifications(final Hand hand, final Hand otherHand) {
         return Integer.compare(hand.getHandAnalyzer().getClassification().getClassificationRank().getValue(),
-                otherHand.getHandAnalyzer().getClassification().getClassificationRank().getValue());
+                               otherHand.getHandAnalyzer().getClassification().getClassificationRank().getValue());
     }
 
 }
